@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import '../../services/asset_helper.dart';
 
 class ProviderProfileScreen extends StatelessWidget {
@@ -53,10 +54,10 @@ class ProviderProfileScreen extends StatelessWidget {
                           height: 100,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.emeraldAccent, width: 2.5),
+                            border: Border.all(color: AppColors.emeraldAccent, width: 2.5),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.emeraldAccent.withOpacity(0.2),
+                                color: AppColors.emeraldAccent.withOpacity(0.2),
                                 blurRadius: 20,
                               )
                             ],
@@ -92,7 +93,7 @@ class ProviderProfileScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           _buildStatCard("RATING", "⭐ 4.8", Colors.amberAccent),
-                          _buildStatCard("COMPLETED JOBS", "42 Jobs", Colors.emeraldAccent),
+                          _buildStatCard("COMPLETED JOBS", "42 Jobs", AppColors.emeraldAccent),
                           _buildStatCard("EXPERIENCE", "6 Years", Colors.blueAccent),
                         ],
                       ),
@@ -104,7 +105,7 @@ class ProviderProfileScreen extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "Specializations",
-                          style: TextStyle(color: Colors.emeraldAccent.shade100, fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
+                          style: TextStyle(color: AppColors.emeraldAccent.shade100, fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -117,7 +118,7 @@ class ProviderProfileScreen extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "Equipment Fleet Details",
-                          style: TextStyle(color: Colors.emeraldAccent.shade100, fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
+                          style: TextStyle(color: AppColors.emeraldAccent.shade100, fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -130,7 +131,7 @@ class ProviderProfileScreen extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "Verified Customer Reviews",
-                          style: TextStyle(color: Colors.emeraldAccent.shade100, fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
+                          style: TextStyle(color: AppColors.emeraldAccent.shade100, fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -179,7 +180,7 @@ class ProviderProfileScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             border: Border.all(color: Colors.white.withOpacity(0.08)),
           ),
-          child: Text(t, style: const TextStyle(color: Colors.emeraldAccent, fontSize: 12)),
+          child: Text(t, style: const TextStyle(color: AppColors.emeraldAccent, fontSize: 12)),
         );
       }).toList(),
     );
@@ -254,7 +255,7 @@ class _EquipmentRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
-          Icon(icon, color: Colors.emeraldAccent, size: 20),
+          Icon(icon, color: AppColors.emeraldAccent, size: 20),
           const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../providers/booking_provider.dart';
 import '../../providers/language_provider.dart';
@@ -182,7 +183,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
             children: [
               Text(
                 langProvider.translate('assalamu_alaikum'),
-                style: TextStyle(color: Colors.emeraldAccent.shade100, fontSize: 14),
+                style: TextStyle(color: AppColors.emeraldAccent.shade100, fontSize: 14),
               ),
               const SizedBox(height: 4),
               Text(
@@ -217,7 +218,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
-                      color: langProvider.isUrdu ? Colors.white38 : Colors.emeraldAccent,
+                      color: langProvider.isUrdu ? Colors.white38 : AppColors.emeraldAccent,
                     ),
                   ),
                   Container(
@@ -231,7 +232,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
-                      color: langProvider.isUrdu ? Colors.emeraldAccent : Colors.white38,
+                      color: langProvider.isUrdu ? AppColors.emeraldAccent : Colors.white38,
                       fontFamily: 'Noto Naskh Arabic',
                     ),
                   ),
@@ -247,7 +248,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
   Widget _buildShortcutsHeader(LanguageProvider lang) {
     return Row(
       children: [
-        const Icon(Icons.mic_none, color: Colors.emeraldAccent, size: 18),
+        const Icon(Icons.mic_none, color: AppColors.emeraldAccent, size: 18),
         const SizedBox(width: 8),
         Text(
           lang.translate('voice_match'),
@@ -291,7 +292,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
             ),
             child: Text(
               txt,
-              style: const TextStyle(color: Colors.emeraldAccent, fontSize: 12),
+              style: const TextStyle(color: AppColors.emeraldAccent, fontSize: 12),
             ),
           ),
         );
@@ -333,13 +334,13 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
                   gradient: LinearGradient(
                     colors: _isListening 
                       ? [Colors.redAccent, Colors.pink] 
-                      : [Colors.emeraldAccent, Colors.teal],
+                      : [AppColors.emeraldAccent, Colors.teal],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: (_isListening ? Colors.redAccent : Colors.emeraldAccent).withOpacity(0.4),
+                      color: (_isListening ? Colors.redAccent : AppColors.emeraldAccent).withOpacity(0.4),
                       blurRadius: 20,
                       spreadRadius: 2,
                     )
@@ -360,7 +361,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
                 ? (lang.isUrdu ? "بکنگ کے لیے مائیک چھوڑیں" : "RELEASE TO ORCHESTRATE")
                 : (lang.isUrdu ? "بولنے کے لیے دبا کر رکھیں" : "HOLD TO SPEAK"),
             style: TextStyle(
-              color: _isListening ? Colors.redAccent : Colors.emeraldAccent,
+              color: _isListening ? Colors.redAccent : AppColors.emeraldAccent,
               fontSize: 12,
               fontWeight: FontWeight.bold,
               letterSpacing: 2,
@@ -377,7 +378,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
       children: [
         Row(
           children: [
-            const Icon(Icons.history, color: Colors.emeraldAccent, size: 18),
+            const Icon(Icons.history, color: AppColors.emeraldAccent, size: 18),
             const SizedBox(width: 8),
             Text(
               lang.translate('recent_bookings'),
@@ -389,7 +390,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
           const SizedBox(
             width: 14,
             height: 14,
-            child: CircularProgressIndicator(strokeWidth: 2, color: Colors.emeraldAccent),
+            child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.emeraldAccent),
           )
       ],
     );
@@ -447,7 +448,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
         // Status badge colors
         Color badgeColor = Colors.yellow;
         if (status == "confirmed" || status == "completed") {
-          badgeColor = Colors.emeraldAccent;
+          badgeColor = AppColors.emeraldAccent;
         } else if (status == "disputed" || status == "resolved") {
           badgeColor = Colors.orangeAccent;
         }
@@ -470,7 +471,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
                     children: [
                       Icon(
                         service == "harvester" ? Icons.agriculture : Icons.airport_shuttle,
-                        color: Colors.emeraldAccent,
+                        color: AppColors.emeraldAccent,
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -520,13 +521,13 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> with Sing
                   if (status == "confirmed" || status == "active")
                     TextButton.icon(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.emeraldAccent.withOpacity(0.12),
+                        backgroundColor: AppColors.emeraldAccent.withOpacity(0.12),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       ),
-                      icon: const Icon(Icons.map, color: Colors.emeraldAccent, size: 16),
+                      icon: const Icon(Icons.map, color: AppColors.emeraldAccent, size: 16),
                       label: Text(
                         lang.translate('gps_tracking'), 
-                        style: const TextStyle(color: Colors.emeraldAccent)
+                        style: const TextStyle(color: AppColors.emeraldAccent)
                       ),
                       onPressed: () {
                         // Open Leaflet Live Tracking OSM Map

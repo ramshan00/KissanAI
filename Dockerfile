@@ -20,6 +20,9 @@ RUN git config --global --add safe.directory /usr/local/flutter
 # Add flutter to path
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
+# Avoid tar ownership errors in rootless/user-namespace environments
+ENV TAR_OPTIONS="--no-same-owner"
+
 # Run doctor to verify setup
 RUN flutter doctor -v
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../providers/language_provider.dart';
 import 'otp_screen.dart';
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  color: langProvider.isUrdu ? Colors.white38 : Colors.emeraldAccent,
+                                  color: langProvider.isUrdu ? Colors.white38 : AppColors.emeraldAccent,
                                 ),
                               ),
                               Container(
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  color: langProvider.isUrdu ? Colors.emeraldAccent : Colors.white38,
+                                  color: langProvider.isUrdu ? AppColors.emeraldAccent : Colors.white38,
                                   fontFamily: 'Noto Naskh Arabic',
                                 ),
                               ),
@@ -123,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.white.withOpacity(0.1)),
                         ),
-                        child: const Icon(Icons.lock_person, size: 50, color: Colors.emeraldAccent),
+                        child: const Icon(Icons.lock_person, size: 50, color: AppColors.emeraldAccent),
                       ),
                     ),
                     
@@ -200,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(14),
-                                      borderSide: const BorderSide(color: Colors.emeraldAccent),
+                                      borderSide: const BorderSide(color: AppColors.emeraldAccent),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                                   ),
@@ -225,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // OTP Submission Button
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.emeraldAccent,
+                              backgroundColor: AppColors.emeraldAccent,
                               minimumSize: const Size(double.infinity, 52),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                               elevation: 4,

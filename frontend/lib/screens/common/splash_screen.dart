@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import '../auth/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -71,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     border: Border.all(color: Colors.white.withOpacity(0.12)),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.emeraldAccent.withOpacity(0.1),
+                        color: AppColors.emeraldAccent.withOpacity(0.1),
                         blurRadius: 30,
                         spreadRadius: 2,
                       )
@@ -80,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   child: const Icon(
                     Icons.agriculture,
                     size: 80,
-                    color: Colors.emeraldAccent,
+                    color: AppColors.emeraldAccent,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -102,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   "Pakistan's AI Agricultural Orchestrator",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.emeraldAccent.shade100,
+                    color: AppColors.emeraldAccent.shade100,
                     letterSpacing: 1.5,
                     fontFamily: 'Plus Jakarta Sans',
                   ),
@@ -115,7 +116,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   height: 24,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
-                    color: Colors.emeraldAccent,
+                    color: AppColors.emeraldAccent,
                   ),
                 ),
               ],

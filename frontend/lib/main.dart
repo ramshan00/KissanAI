@@ -49,7 +49,7 @@ class KissanApp extends StatelessWidget {
                 bodyLarge: TextStyle(color: Colors.white70),
                 bodyMedium: TextStyle(color: Colors.white60),
               ),
-              cardTheme: CardTheme(
+              cardTheme: CardThemeData(
                 color: Colors.white.withOpacity(0.04),
                 elevation: 0,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

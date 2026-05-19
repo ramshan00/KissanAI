@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../providers/booking_provider.dart';
 import '../../services/asset_helper.dart';
@@ -129,9 +130,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   height: 90,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.emeraldAccent, width: 2),
+                                    border: Border.all(color: AppColors.emeraldAccent, width: 2),
                                     boxShadow: [
-                                      BoxShadow(color: Colors.emeraldAccent.withOpacity(0.1), blurRadius: 15)
+                                      BoxShadow(color: AppColors.emeraldAccent.withOpacity(0.1), blurRadius: 15)
                                     ],
                                   ),
                                   child: _photoUploaded 
@@ -147,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     right: 0,
                                     child: Container(
                                       padding: const EdgeInsets.all(4),
-                                      decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.emeraldAccent),
+                                      decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.emeraldAccent),
                                       child: const Icon(Icons.check, color: Color(0xFF0F172A), size: 12),
                                     ),
                                   )
@@ -230,7 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.emeraldAccent,
+                                  backgroundColor: AppColors.emeraldAccent,
                                   minimumSize: const Size(double.infinity, 52),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                                 ),
@@ -280,7 +281,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       hintStyle: const TextStyle(color: Colors.white24),
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.white.withOpacity(0.1))),
       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.white.withOpacity(0.08))),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.emeraldAccent)),
+      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.emeraldAccent)),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );
   }
@@ -296,13 +297,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.emeraldAccent.withOpacity(0.12) : Colors.white.withOpacity(0.04),
-          border: Border.all(color: isSelected ? Colors.emeraldAccent : Colors.white.withOpacity(0.08), width: 1.5),
+          color: isSelected ? AppColors.emeraldAccent.withOpacity(0.12) : Colors.white.withOpacity(0.04),
+          border: Border.all(color: isSelected ? AppColors.emeraldAccent : Colors.white.withOpacity(0.08), width: 1.5),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           children: [
-            Icon(icon, color: isSelected ? Colors.emeraldAccent : Colors.white60, size: 24),
+            Icon(icon, color: isSelected ? AppColors.emeraldAccent : Colors.white60, size: 24),
             const SizedBox(height: 8),
             Text(
               label,

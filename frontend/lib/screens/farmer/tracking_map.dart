@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong2.dart';
 import 'package:provider/provider.dart';
@@ -49,10 +50,10 @@ class _TrackingMapScreenState extends State<TrackingMapScreen> {
     const double farmerLng = 74.3900;
     
     final LatLng providerLatLng = LatLng(providerLat, providerLng);
-    const LatLng farmerLatLng = LatLng(farmerLat, farmerLng);
+    final LatLng farmerLatLng = LatLng(farmerLat, farmerLng);
 
     // Dynamic distance tracking calculation
-    final distance = const Distance().as(
+    final distance = Distance().as(
       LengthUnit.Meter,
       providerLatLng,
       farmerLatLng,
@@ -93,7 +94,7 @@ class _TrackingMapScreenState extends State<TrackingMapScreen> {
                             height: 60,
                             child: Column(
                               children: [
-                                Icon(Icons.home_work, color: Colors.emeraldAccent, size: 36),
+                                Icon(Icons.home_work, color: AppColors.emeraldAccent, size: 36),
                                 Text("My Farm", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, backgroundColor: Colors.black54)),
                               ],
                             ),
@@ -177,7 +178,7 @@ class _TrackingMapScreenState extends State<TrackingMapScreen> {
           Text(
             statusText,
             style: TextStyle(
-              color: prov.providerLocation != null ? Colors.emeraldAccent : Colors.orangeAccent,
+              color: prov.providerLocation != null ? AppColors.emeraldAccent : Colors.orangeAccent,
               fontSize: 11,
               fontWeight: FontWeight.bold,
             ),

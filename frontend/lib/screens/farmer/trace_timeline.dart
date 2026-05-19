@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../providers/booking_provider.dart';
 
@@ -44,7 +45,7 @@ class TraceTimelineScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Google Antigravity Engine",
-                      style: TextStyle(color: Colors.emeraldAccent, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 2),
+                      style: TextStyle(color: AppColors.emeraldAccent, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 2),
                     ),
                     SizedBox(height: 6),
                     Text(
@@ -100,14 +101,14 @@ class TraceTimelineScreen extends StatelessWidget {
             width: 70,
             height: 70,
             child: CircularProgressIndicator(
-              color: Colors.emeraldAccent,
+              color: AppColors.emeraldAccent,
               strokeWidth: 4,
             ),
           ),
           const SizedBox(height: 32),
           const Text(
             "AI AGENTS SYNCHRONIZING...",
-            style: TextStyle(color: Colors.emeraldAccent, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 3),
+            style: TextStyle(color: AppColors.emeraldAccent, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 3),
           ),
           const SizedBox(height: 10),
           Padding(
@@ -140,14 +141,14 @@ class TraceTimelineScreen extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                shape: BoxShape.shapeCircle,
-                color: Colors.emeraldAccent.withOpacity(0.12),
-                border: Border.all(color: Colors.emeraldAccent, width: 2),
+                shape: BoxShape.circle,
+                color: AppColors.emeraldAccent.withOpacity(0.12),
+                border: Border.all(color: AppColors.emeraldAccent, width: 2),
               ),
               child: Center(
                 child: Text(
                   index.toString(),
-                  style: const TextStyle(color: Colors.emeraldAccent, fontWeight: FontWeight.bold, fontSize: 12),
+                  style: const TextStyle(color: AppColors.emeraldAccent, fontWeight: FontWeight.bold, fontSize: 12),
                 ),
               ),
             ),
@@ -155,7 +156,7 @@ class TraceTimelineScreen extends StatelessWidget {
               Container(
                 width: 2,
                 height: 75,
-                color: Colors.emeraldAccent.withOpacity(0.3),
+                color: AppColors.emeraldAccent.withOpacity(0.3),
               ),
           ],
         ),
@@ -184,7 +185,7 @@ class TraceTimelineScreen extends StatelessWidget {
                     ),
                     Text(
                       status,
-                      style: const TextStyle(color: Colors.emeraldAccent, fontSize: 11, fontWeight: FontWeight.bold),
+                      style: const TextStyle(color: AppColors.emeraldAccent, fontSize: 11, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -221,11 +222,11 @@ class TraceTimelineScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.check_circle, color: Colors.emeraldAccent, size: 24),
+              const Icon(Icons.check_circle, color: AppColors.emeraldAccent, size: 24),
               const SizedBox(width: 10),
               Text(
                 "Match Orchestrated Successfully!",
-                style: TextStyle(color: Colors.emeraldAccent.shade100, fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(color: AppColors.emeraldAccent.shade100, fontSize: 16, fontWeight: FontWeight.bold),
               )
             ],
           ),
@@ -246,7 +247,7 @@ class TraceTimelineScreen extends StatelessWidget {
                 children: [
                   Text("FAIR PRICE FARE", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 11)),
                   const SizedBox(height: 4),
-                  Text("PKR $price", style: const TextStyle(color: Colors.emeraldAccent, fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text("PKR $price", style: const TextStyle(color: AppColors.emeraldAccent, fontSize: 16, fontWeight: FontWeight.bold)),
                 ],
               )
             ],
@@ -255,7 +256,7 @@ class TraceTimelineScreen extends StatelessWidget {
           
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.emeraldAccent,
+              backgroundColor: AppColors.emeraldAccent,
               minimumSize: const Size(double.infinity, 50),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             ),

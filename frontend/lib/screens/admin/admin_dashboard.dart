@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import '../../services/api_service.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -47,13 +48,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         title: const Text("KissanAI Admin Portal", style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Outfit')),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.emeraldAccent),
+            icon: const Icon(Icons.refresh, color: AppColors.emeraldAccent),
             onPressed: _loadAdminMetrics,
           ),
         ],
       ),
       body: _isLoading 
-        ? const Center(child: CircularProgressIndicator(color: Colors.emeraldAccent))
+        ? const Center(child: CircularProgressIndicator(color: AppColors.emeraldAccent))
         : _metrics == null
           ? const Center(child: Text("Failed to load metrics. Ensure backend server is active."))
           : SingleChildScrollView(
@@ -84,7 +85,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           Icons.engineering, 
                           "Active Providers", 
                           _metrics!["active_providers"].toString(), 
-                          Colors.emeraldAccent
+                          AppColors.emeraldAccent
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -221,10 +222,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         child: Container(
                           height: 12,
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(colors: [Colors.emeraldAccent, Colors.teal]),
+                            gradient: const LinearGradient(colors: [AppColors.emeraldAccent, Colors.teal]),
                             borderRadius: BorderRadius.circular(6),
                             boxShadow: [
-                              BoxShadow(color: Colors.emeraldAccent.withOpacity(0.2), blurRadius: 4)
+                              BoxShadow(color: AppColors.emeraldAccent.withOpacity(0.2), blurRadius: 4)
                             ]
                           ),
                         ),
@@ -235,7 +236,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 const SizedBox(width: 14),
                 Text(
                   count.toString(),
-                  style: const TextStyle(color: Colors.emeraldAccent, fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: AppColors.emeraldAccent, fontWeight: FontWeight.bold),
                 )
               ],
             ),

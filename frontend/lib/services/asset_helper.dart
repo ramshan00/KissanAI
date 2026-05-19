@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 
 class AssetHelper {
   // Absolute file paths pointing directly to our premium local AI generated assets
@@ -15,9 +16,9 @@ class AssetHelper {
       return Image.file(file, width: width, height: height, fit: fit);
     }
     return Container(
-      color: Colors.emerald.withOpacity(0.1),
+      color: AppColors.emerald.withOpacity(0.1),
       child: const Center(
-        child: Icon(Icons.agriculture, size: 80, color: Colors.emeraldAccent),
+        child: Icon(Icons.agriculture, size: 80, color: AppColors.emeraldAccent),
       ),
     );
   }
@@ -31,13 +32,13 @@ class AssetHelper {
       height: 180,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.emerald.shade900, Colors.teal.shade900],
+          colors: [AppColors.emerald.shade900, Colors.teal.shade900],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
       child: const Center(
-        child: Icon(Icons.airport_shuttle, size: 50, color: Colors.emeraldAccent),
+        child: Icon(Icons.airport_shuttle, size: 50, color: AppColors.emeraldAccent),
       ),
     );
   }

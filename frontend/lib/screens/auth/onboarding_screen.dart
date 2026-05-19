@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kissanai/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../services/asset_helper.dart';
 import '../../providers/language_provider.dart';
@@ -77,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: langProvider.isUrdu ? Colors.white38 : Colors.emeraldAccent,
+                                color: langProvider.isUrdu ? Colors.white38 : AppColors.emeraldAccent,
                               ),
                             ),
                             Container(
@@ -91,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: langProvider.isUrdu ? Colors.emeraldAccent : Colors.white38,
+                                color: langProvider.isUrdu ? AppColors.emeraldAccent : Colors.white38,
                                 fontFamily: 'Noto Naskh Arabic',
                               ),
                             ),
@@ -160,13 +161,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                             decoration: BoxDecoration(
-                              color: Colors.emeraldAccent.withOpacity(0.12),
+                              color: AppColors.emeraldAccent.withOpacity(0.12),
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: Colors.emeraldAccent.withOpacity(0.4)),
+                              border: Border.all(color: AppColors.emeraldAccent.withOpacity(0.4)),
                             ),
                             child: Text(
                               slide["tag"]!,
-                              style: const TextStyle(color: Colors.emeraldAccent, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5),
+                              style: const TextStyle(color: AppColors.emeraldAccent, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5),
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -203,7 +204,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           height: 8.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4.0),
-                            color: _currentPage == index ? Colors.emeraldAccent : Colors.white24,
+                            color: _currentPage == index ? AppColors.emeraldAccent : Colors.white24,
                           ),
                         );
                       }),
@@ -212,7 +213,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // Next/Start Button
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.emeraldAccent,
+                        backgroundColor: AppColors.emeraldAccent,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                       ),
