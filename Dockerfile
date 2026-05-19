@@ -27,6 +27,9 @@ RUN flutter doctor -v
 WORKDIR /app
 COPY frontend /app
 
+# Generate missing platform templates
+RUN flutter create .
+
 # Build Flutter Web with production HF Spaces API URL
 RUN flutter build web --release --dart-define=API_URL=https://ramsha00-kissanai.hf.space
 

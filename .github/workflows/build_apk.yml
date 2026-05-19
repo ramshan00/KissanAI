@@ -28,6 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd frontend
+          flutter create .
           flutter pub get
 
       - name: Build APK
