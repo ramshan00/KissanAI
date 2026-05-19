@@ -23,6 +23,9 @@ ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PAT
 # Avoid tar ownership errors in rootless/user-namespace environments
 ENV TAR_OPTIONS="--no-same-owner"
 
+# Disable analytics
+RUN flutter config --no-analytics
+
 # Run doctor to verify setup
 RUN flutter doctor -v
 
