@@ -1,0 +1,2860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KissanAI - AI-Orchestrated Informal Marketplace</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #00c270; /* Careem Green */
+            --primary-dark: #009e5a;
+            --primary-light: #EBFDF5;
+            --accent: #FF9F00; /* Rich Gold */
+            --accent-light: #FFF8EB;
+            --bg: #F4F6F8; /* Clean soft light slate/cream */
+            --bg-panel: #FFFFFF;
+            --text-dark: #0F172A; /* Slate 900 */
+            --text-light: #64748B; /* Slate 500 */
+            --card-bg: rgba(255, 255, 255, 0.9); /* Premium Light Glassmorphism */
+            --card-border: rgba(226, 232, 240, 0.8);
+            --uber-black: #09090b;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            --glow-green: 0 0 20px rgba(0, 194, 112, 0.15);
+            --glow-accent: 0 0 20px rgba(255, 159, 0, 0.15);
+        }
+
+        body.ur-lang {
+            font-family: 'Noto Naskh Arabic', 'Plus Jakarta Sans', sans-serif !important;
+        }
+
+        body.ur-lang .welcome-card h2, 
+        body.ur-lang .welcome-card h3,
+        body.ur-lang .section-title,
+        body.ur-lang .logo-text,
+        body.ur-lang .nav-btn,
+        body.ur-lang .btn-primary,
+        body.ur-lang .btn-outline {
+            font-family: 'Noto Naskh Arabic', 'Outfit', sans-serif !important;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #F4F6F8;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.3s;
+        }
+
+        /* Mobile Device Frame Mockup on Desktop */
+        @media (min-width: 500px) {
+            body {
+                background: radial-gradient(circle at top, #E2E8F0 0%, #CBD5E1 100%);
+                align-items: center;
+                justify-content: center;
+                padding: 20px 0;
+            }
+            
+            .phone-wrapper {
+                width: 415px;
+                height: 840px;
+                border-radius: 44px;
+                background: #FFFFFF;
+                box-shadow: var(--shadow-xl);
+                border: 12px solid #09090b;
+                overflow: hidden;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            nav {
+                border-top-left-radius: 28px;
+                border-top-right-radius: 28px;
+            }
+        }
+
+        /* Glassmorphic Navbar */
+        nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            background: var(--primary-light);
+            color: var(--primary);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 1px solid rgba(0, 194, 112, 0.25);
+            box-shadow: var(--glow-green);
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--uber-black);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: var(--glow-accent);
+        }
+
+        .nav-btn {
+            background: var(--uber-black);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* Container Layout */
+        .app-container {
+            flex-grow: 1;
+            width: 100%;
+            padding: 20px 16px 100px 16px;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        
+        .app-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Views management with smooth transitions */
+        .view-panel {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .view-panel.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Welcome Card - Clean Uber Light style */
+        .welcome-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            color: var(--text-dark);
+            padding: 24px;
+            border-radius: 28px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::after {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(0, 194, 112, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -60px;
+            right: -60px;
+            pointer-events: none;
+        }
+
+        .welcome-card h3 {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 4px;
+        }
+
+        .welcome-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            color: var(--uber-black);
+        }
+
+        .location-tag {
+            background: var(--primary-light);
+            border: 1px solid rgba(0, 194, 112, 0.2);
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Auto-sliding Banner Carousel */
+        .carousel-container {
+            height: 125px;
+            background: #09090b;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .carousel-slide {
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .carousel-slide.slide-1 {
+            background: linear-gradient(135deg, #09090b 0%, #1f2937 100%);
+        }
+
+        .carousel-slide.slide-2 {
+            background: linear-gradient(135deg, #00c270 0%, #009e5a 100%);
+        }
+
+        .carousel-slide.slide-3 {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+
+        .slide-content {
+            max-width: 70%;
+        }
+
+        .slide-badge {
+            font-size: 8px;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .slide-content h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .slide-content p {
+            font-size: 11px;
+            opacity: 0.85;
+            line-height: 1.3;
+        }
+
+        .slide-icon {
+            font-size: 32px;
+            opacity: 0.35;
+            transform: rotate(-10deg);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .carousel-dots .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dots .dot.active {
+            width: 14px;
+            border-radius: 3px;
+            background: #ffffff;
+        }
+
+        /* Beautiful Pastel Grid Cards */
+        .quick-services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .service-pastel-card {
+            border-radius: 24px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-sm);
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-pastel-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .service-pastel-card.pastel-green {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            border-color: rgba(16, 185, 129, 0.15);
+        }
+
+        .service-pastel-card.pastel-amber {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border-color: rgba(245, 158, 11, 0.15);
+        }
+
+        .service-pastel-card.pastel-blue {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border-color: rgba(59, 130, 246, 0.15);
+        }
+
+        .service-pastel-card.pastel-purple {
+            background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%);
+            border-color: rgba(168, 85, 247, 0.15);
+        }
+
+        .pastel-badge {
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .pastel-green .pastel-badge { color: #047857; }
+        .pastel-amber .pastel-badge { color: #B45309; }
+        .pastel-blue .pastel-badge { color: #1D4ED8; }
+        .pastel-purple .pastel-badge { color: #6D28D9; }
+
+        .service-pastel-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-top: 4px;
+        }
+
+        .service-pastel-card p {
+            font-size: 10px;
+            color: var(--text-light);
+            margin-top: 2px;
+            max-width: 80%;
+        }
+
+        .pastel-icon {
+            position: absolute;
+            bottom: 12px;
+            right: 14px;
+            font-size: 26px;
+            opacity: 0.35;
+        }
+
+        .pastel-green .pastel-icon { color: #10B981; }
+        .pastel-amber .pastel-icon { color: #F59E0B; }
+        .pastel-blue .pastel-icon { color: #3B82F6; }
+        .pastel-purple .pastel-icon { color: #8B5CF6; }
+
+        /* Microphone Section */
+        .mic-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .mic-instruction {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 750;
+            color: var(--uber-black);
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .mic-wrapper {
+            position: relative;
+            cursor: pointer;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mic-button {
+            width: 85px;
+            height: 85px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--uber-black);
+            font-size: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0,0,0,0.02);
+            position: relative;
+            z-index: 5;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .mic-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85px;
+            height: 85px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: 1;
+            display: none;
+        }
+
+        .mic-wrapper.listening .ripple {
+            display: block;
+            animation: pulse-ripple 1.5s infinite ease-out;
+        }
+
+        .mic-wrapper.listening .mic-button {
+            background: #EF4444;
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+            border-color: #EF4444;
+        }
+
+        .mic-wrapper.listening .mic-button i {
+            color: #ffffff !important;
+            animation: bounce 1s infinite alternate;
+        }
+
+        /* Transcript Card */
+        .transcript-card {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+            box-shadow: var(--shadow-md);
+        }
+
+        .transcript-card.visible {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .transcript-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 750;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .transcript-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-style: italic;
+            font-weight: 600;
+            text-align: center;
+            padding: 12px 0;
+            color: var(--text-dark);
+        }
+
+        .transcript-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-outline {
+            flex: 1;
+            background: transparent;
+            border: 1.5px solid var(--uber-black);
+            color: var(--uber-black);
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 750;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 0, 0, 0.03);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: var(--uber-black);
+            border: none;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 750;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* Skeleton Loaders */
+        .skeleton-card {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .skeleton-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .skeleton-circle {
+            width: 44px;
+            height: 44px;
+            background-color: #E2E8F0;
+            border-radius: 12px;
+        }
+
+        .skeleton-lines {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .skeleton-line-sm {
+            height: 10px;
+            background-color: #E2E8F0;
+            border-radius: 4px;
+            width: 40%;
+        }
+
+        .skeleton-line-md {
+            height: 12px;
+            background-color: #E2E8F0;
+            border-radius: 4px;
+            width: 70%;
+        }
+
+        .skeleton-line-lg {
+            height: 14px;
+            background-color: #E2E8F0;
+            border-radius: 4px;
+            width: 90%;
+        }
+
+        .animate-pulse {
+            animation: pulse-loader 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-loader {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Recent Bookings Styles */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0 15px 0;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--uber-black);
+            letter-spacing: -0.5px;
+        }
+
+        .refresh-btn {
+            background: var(--primary-light);
+            border: 1px solid rgba(0, 194, 112, 0.2);
+            color: var(--primary-dark);
+            cursor: pointer;
+            font-size: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover {
+            transform: rotate(180deg);
+            background: rgba(0, 194, 112, 0.15);
+        }
+
+        .bookings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .booking-card {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .service-info h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--uber-black);
+            text-transform: capitalize;
+        }
+
+        .service-info p {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.confirmed {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            border: 1px solid rgba(0, 194, 112, 0.2);
+        }
+
+        .status-badge.resolved {
+            background-color: #EFF6FF;
+            color: #1D4ED8;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .status-badge.pending {
+            background-color: var(--accent-light);
+            color: #B45309;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .card-divider {
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.05);
+            margin: 14px 0;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .meta-col {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .meta-label {
+            font-size: 9px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 750;
+            letter-spacing: 0.5px;
+        }
+
+        .meta-val {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .price-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--uber-black);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .action-sub-btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 750;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .action-sub-btn.details {
+            background: #F1F5F9;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-dark);
+        }
+
+        .action-sub-btn.details:hover {
+            background: #E2E8F0;
+        }
+
+        .action-sub-btn.dispute {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+
+        .action-sub-btn.dispute:hover {
+            background: #EF4444;
+            color: #ffffff;
+        }
+
+        /* Modern Bottom Navigation Bar */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 75px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 99;
+            padding-bottom: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Outfit', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item.active {
+            color: var(--uber-black);
+        }
+
+        .nav-item.active i {
+            transform: translateY(-2px);
+            color: var(--primary);
+        }
+
+        /* Trace Visualizer Modal Overlay */
+        .trace-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .trace-modal {
+            max-width: 440px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            max-height: 85vh;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .trace-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .trace-engine-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-light);
+            border: 1px solid rgba(255, 159, 0, 0.25);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 20px;
+            box-shadow: var(--glow-accent);
+        }
+
+        .trace-engine-title h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--uber-black);
+        }
+
+        .trace-engine-title p {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .trace-steps-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 5px;
+        }
+
+        .trace-step-row {
+            display: flex;
+            gap: 15px;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+
+        .trace-step-row.active {
+            opacity: 1;
+        }
+
+        .trace-step-row.completed {
+            opacity: 0.85;
+        }
+
+        .step-icon-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-icon-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .trace-step-row.active .step-icon-circle {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+            box-shadow: var(--glow-accent);
+        }
+
+        .trace-step-row.completed .step-icon-circle {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            box-shadow: var(--glow-green);
+        }
+
+        .step-line {
+            width: 2px;
+            flex-grow: 1;
+            background: #E2E8F0;
+            margin-top: 6px;
+        }
+
+        .trace-step-row.completed .step-line {
+            background: var(--primary);
+        }
+
+        .step-info-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 12px 16px;
+            flex-grow: 1;
+            color: var(--text-dark);
+        }
+
+        .trace-step-row.active .step-info-card {
+            border-color: rgba(255, 159, 0, 0.3);
+            background: #ffffff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 750;
+            font-size: 13.5px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .step-spinner {
+            font-size: 11px;
+            color: var(--accent);
+            animation: spin 1s infinite linear;
+        }
+
+        .step-details-table {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 6px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 6px;
+            display: none;
+        }
+
+        .trace-step-row.active .step-details-table,
+        .trace-step-row.completed .step-details-table {
+            display: block;
+        }
+
+        .step-details-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+
+        .details-label {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .trace-modal-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-modal-unlock {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 750;
+            font-size: 14px;
+            border: 1px solid #E2E8F0;
+            background: #F1F5F9;
+            color: var(--text-light);
+            cursor: not-allowed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-modal-unlock.ready {
+            background: var(--uber-black);
+            color: #ffffff;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-modal-unlock.ready:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* Provider profile card & switches */
+        .provider-profile-card {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .p-profile-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .p-avatar {
+            width: 52px;
+            height: 52px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 1px solid rgba(0, 194, 112, 0.2);
+        }
+
+        .p-details h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--uber-black);
+        }
+
+        .p-details p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .status-toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .switch-container {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .switch-container input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #E2E8F0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px; width: 18px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* ResolveAI Dispute Chat box */
+        .dispute-chat-box {
+            background: #F8FAFC;
+            border-radius: 20px;
+            border: 1px solid #E2E8F0;
+            padding: 15px;
+            height: 280px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 12.5px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .chat-bubble.farmer {
+            align-self: flex-end;
+            background: var(--accent-light);
+            color: #92400E;
+            border-bottom-right-radius: 2px;
+            border: 1px solid rgba(245, 158, 11, 0.15);
+        }
+
+        .chat-bubble.system {
+            align-self: center;
+            background: #F1F5F9;
+            color: var(--text-light);
+            font-size: 11px;
+            text-align: center;
+            border-radius: 6px;
+            padding: 4px 10px;
+        }
+
+        .chat-bubble.agent {
+            align-self: flex-start;
+            background: var(--primary-light);
+            color: #065F46;
+            border: 1px solid rgba(0, 194, 112, 0.15);
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-action-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-dispute-run {
+            background: #EF4444;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 750;
+            font-size: 13.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-dispute-run:hover {
+            background: #DC2626;
+            transform: translateY(-1px);
+        }
+
+        .resolve-trace-details {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .resolve-trace-details.visible {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .resolve-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--uber-black);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .resolve-trace-item {
+            font-size: 11.5px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .resolve-trace-item i {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+
+        /* Detail Modal & Interactive Map canvas */
+        .detail-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(8px);
+            z-index: 900;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .detail-modal {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 25px;
+            box-shadow: var(--shadow-xl);
+            color: var(--text-dark);
+            border: 1px solid var(--card-border);
+        }
+
+        .map-canvas-container {
+            height: 180px;
+            background: linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 100%);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 194, 112, 0.15);
+        }
+
+        .map-grid {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: 20px 20px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 194, 112, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 194, 112, 0.03) 1px, transparent 1px);
+        }
+
+        .map-marker {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .map-marker.provider {
+            top: 40px; left: 60px;
+            color: var(--primary-dark);
+            animation: bounce-marker 1.8s infinite alternate ease-in-out;
+        }
+
+        .map-marker.farmer {
+            bottom: 30px; right: 80px;
+            color: var(--accent);
+        }
+
+        .marker-label {
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 3px;
+            white-space: nowrap;
+        }
+
+        .map-path {
+            position: absolute;
+            top: 50px; left: 75px;
+            width: 170px; height: 75px;
+            border-bottom: 2px dashed rgba(255, 159, 0, 0.5);
+            border-left: 2px dashed rgba(255, 159, 0, 0.5);
+        }
+
+        .map-gps-active {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 9px;
+            font-weight: 750;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--primary-dark);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .detail-row.total {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 12px;
+            padding-top: 12px;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--uber-black);
+        }
+
+        /* Animations */
+        @keyframes pulse-ripple {
+            0% { width: 85px; height: 85px; opacity: 0.2; }
+            100% { width: 150px; height: 150px; opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce-marker {
+            from { transform: translateY(0); }
+            to { transform: translateY(-6px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Responsive Phone Simulator Wrapper -->
+    <div class="phone-wrapper">
+        
+        <!-- Glassmorphic Navbar -->
+        <nav>
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                </div>
+                <div class="logo-text">KissanAI <span class="logo-dot"></span></div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <!-- Modern Language Toggle Pill -->
+                <div class="lang-toggle-pill" onclick="toggleLanguage()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); padding: 5px 12px; border-radius: 20px; display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; font-weight: bold; font-family: 'Outfit', sans-serif; transition: all 0.3s; color: white;">
+                    <span id="langDisplayEn" style="color: var(--primary);">EN</span>
+                    <div style="width: 1px; height: 10px; background: rgba(255,255,255,0.2);"></div>
+                    <span id="langDisplayUr" style="color: rgba(255,255,255,0.5);">اردو</span>
+                </div>
+                
+                <button class="nav-btn" id="viewToggleBtn" onclick="toggleView()" style="display: none;">
+                    <i class="fa-solid fa-cubes"></i>
+                    <span>Provider Panel</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="app-container">
+
+            <!-- 0️⃣ LOGIN VIEW -->
+            <div id="loginView" class="view-panel active">
+                <div class="welcome-card" style="text-align: center; padding: 30px 20px; margin-bottom: 0; border-radius: 24px;">
+                    <div class="logo-icon" style="margin: 0 auto 16px auto; width: 50px; height: 50px; font-size: 24px; border-radius: 14px;">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h2 id="welcomeTitle">Welcome to KissanAI</h2>
+                    <h3 id="welcomeSubtitle" style="margin-bottom: 20px; font-size: 11px;">Please login to continue</h3>
+                    
+                    <!-- Language Selection Option on Login Card -->
+                    <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; background: rgba(0,0,0,0.03); padding: 4px; border-radius: 25px; border: 1px solid rgba(0,0,0,0.05); max-width: 200px; margin-left: auto; margin-right: auto;">
+                        <button id="langSelectBtnEn" onclick="changeLanguage('en')" style="flex: 1; padding: 6px 14px; border-radius: 20px; border: none; background: var(--primary); color: white; font-weight: bold; font-size: 11px; cursor: pointer; transition: all 0.2s; font-family: 'Outfit';">English</button>
+                        <button id="langSelectBtnUr" onclick="changeLanguage('ur')" style="flex: 1; padding: 6px 14px; border-radius: 20px; border: none; background: transparent; color: var(--text-light); font-weight: bold; font-size: 11px; cursor: pointer; transition: all 0.2s; font-family: 'Outfit';">اردو</button>
+                    </div>
+                    
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 18px; border-radius: 18px; margin-bottom: 15px;">
+                        <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                            <button id="tabLogin" onclick="setAuthMode('login')" style="flex: 1; padding: 10px; border-radius: 10px; border: none; background: var(--primary); color: white; font-weight: bold; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s;">Login</button>
+                            <button id="tabSignup" onclick="setAuthMode('signup')" style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--primary); background: transparent; color: var(--primary); font-weight: bold; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s;">Sign Up</button>
+                        </div>
+
+                        <input type="text" id="nameInput" placeholder="Full Name" style="display: none; width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #ffffff; color: var(--text-dark); font-family: 'Outfit', sans-serif; margin-bottom: 12px; font-size: 13.5px; outline: none;">
+
+                        <input type="text" id="phoneInput" placeholder="Enter Phone Number" value="+923001234567" style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #ffffff; color: var(--text-dark); font-family: 'Outfit', sans-serif; margin-bottom: 12px; font-size: 13.5px; outline: none;">
+                        
+                        <select id="roleInput" style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #ffffff; color: var(--text-dark); font-family: 'Outfit', sans-serif; font-size: 13.5px; outline: none; cursor: pointer;">
+                            <option value="farmer">Farmer</option>
+                            <option value="provider">Provider</option>
+                        </select>
+                    </div>
+                    
+                    <button id="authSubmitBtn" onclick="handleAuth()" class="btn-primary" style="width: 100%; padding: 14px; font-size: 14.5px; background: var(--uber-black); color: #ffffff; border: none; font-weight: 800; border-radius: 12px;">
+                        Login / Enter Hub
+                    </button>
+                </div>
+            </div>
+
+            <!-- 1️⃣ FARMER VIEW PORTAL -->
+            <div id="farmerView" class="view-panel">
+                <!-- Welcome banner -->
+                <div class="welcome-card">
+                    <h3>Assalamu Alaikum,</h3>
+                    <h2>Bashir Ahmad 👋</h2>
+                    <div class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> Lahore, Punjab
+                    </div>
+                </div>
+
+                <!-- Auto-sliding Banners Carousel -->
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carouselTrack">
+                        <div class="carousel-slide slide-1">
+                            <div class="slide-content">
+                                <span class="slide-badge">MATCHING NOW</span>
+                                <h3>AI Agent Smart Match</h3>
+                                <p>Matched with tractor operators in under 3 minutes.</p>
+                            </div>
+                            <div class="slide-icon"><i class="fa-solid fa-bolt"></i></div>
+                        </div>
+                        <div class="carousel-slide slide-2">
+                            <div class="slide-content">
+                                <span class="slide-badge">WEEKEND PROMO</span>
+                                <h3>Save 30% on Tractors</h3>
+                                <p>Rent any tractor this weekend to save big on plowing.</p>
+                            </div>
+                            <div class="slide-icon"><i class="fa-solid fa-percent"></i></div>
+                        </div>
+                        <div class="carousel-slide slide-3">
+                            <div class="slide-content">
+                                <span class="slide-badge">URDU VOICE RENT</span>
+                                <h3>Speak & Book Instantly</h3>
+                                <p>Simply tap the microphone and speak in Roman Urdu or English.</p>
+                            </div>
+                            <div class="slide-icon"><i class="fa-solid fa-microphone"></i></div>
+                        </div>
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="dot active" onclick="setCarouselSlide(0)"></span>
+                        <span class="dot" onclick="setCarouselSlide(1)"></span>
+                        <span class="dot" onclick="setCarouselSlide(2)"></span>
+                    </div>
+                </div>
+
+                <!-- Beautiful Pastel Quick Services Grid -->
+                <div class="quick-services-grid">
+                    <div class="service-pastel-card pastel-green" onclick="selectQuickCommand('Mujhe kal subah Lahore mein tractor chahiye')">
+                        <div>
+                            <span class="pastel-badge">Tractor</span>
+                            <h4>Rent Tractor</h4>
+                            <p>Modern plowing machinery</p>
+                        </div>
+                        <div class="pastel-icon"><i class="fa-solid fa-tractor"></i></div>
+                    </div>
+                    <div class="service-pastel-card pastel-amber" onclick="selectQuickCommand('Urgent harvester required in Faisalabad immediately!')">
+                        <div>
+                            <span class="pastel-badge">Harvester</span>
+                            <h4>Match Harvester</h4>
+                            <p>High-efficiency crop reaping</p>
+                        </div>
+                        <div class="pastel-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+                    </div>
+                    <div class="service-pastel-card pastel-blue" onclick="selectQuickCommand('Multan mein gandum ki katai k liye thresher chahiye')">
+                        <div>
+                            <span class="pastel-badge">Thresher</span>
+                            <h4>Rent Thresher</h4>
+                            <p>Fast Crop threshing services</p>
+                        </div>
+                        <div class="pastel-icon"><i class="fa-solid fa-snowflake"></i></div>
+                    </div>
+                    <div class="service-pastel-card pastel-purple" onclick="selectQuickCommand('Sargodha mein kal beej bone k liye seeder chahiye jaldi')">
+                        <div>
+                            <span class="pastel-badge">Seeder</span>
+                            <h4>Book Seeder</h4>
+                            <p>Precise crop seed sowing</p>
+                        </div>
+                        <div class="pastel-icon"><i class="fa-solid fa-seedling"></i></div>
+                    </div>
+                </div>
+
+                <!-- Central pulsing microphone button -->
+                <div class="mic-section">
+                    <div class="mic-instruction">Tap to speak in Urdu or English</div>
+                    <div class="mic-wrapper" id="micWrapper" onclick="triggerMicListening()">
+                        <div class="ripple"></div>
+                        <div class="ripple" style="animation-delay: 0.5s;"></div>
+                        <div class="mic-button" id="micBtn">
+                            <i class="fa-solid fa-microphone" id="micIcon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Transcript Card -->
+                <div class="transcript-card" id="transcriptCard">
+                    <div class="transcript-header">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Speech Captured</span>
+                    </div>
+                    <div class="transcript-text" id="transcriptText">
+                        Listening to voice commands...
+                    </div>
+                    <div class="transcript-actions" id="transcriptActions">
+                        <button class="btn-outline" onclick="clearTranscript()">Clear</button>
+                        <button class="btn-primary" onclick="submitSpeechInput()">Match AI</button>
+                    </div>
+                </div>
+
+                <!-- Skeleton Loader (Pulsing) -->
+                <div id="skeletonLoader" style="display: none;">
+                    <div class="skeleton-card">
+                        <div class="skeleton-header">
+                            <div class="skeleton-circle animate-pulse"></div>
+                            <div class="skeleton-lines">
+                                <div class="skeleton-line-sm animate-pulse"></div>
+                                <div class="skeleton-line-md animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-body" style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+                            <div class="skeleton-line-lg animate-pulse"></div>
+                            <div class="skeleton-line-md animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Bookings -->
+                <div class="section-header">
+                    <div class="section-title">Recent Bookings</div>
+                    <button class="refresh-btn" onclick="fetchRecentBookings()">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+                
+                <div class="bookings-list" id="bookingsList">
+                    <!-- Bookings loaded here dynamically -->
+                </div>
+            </div>
+
+            <!-- 2️⃣ PROVIDER VIEW PANEL -->
+            <div id="providerView" class="view-panel">
+                <div class="provider-profile-card">
+                    <div class="p-profile-row">
+                        <div class="p-avatar">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <div class="p-details">
+                            <h3>Tariq Mahmood</h3>
+                            <p>Tractor Service Operator • Lahore</p>
+                        </div>
+                    </div>
+                    <div class="status-toggle-row">
+                        <div>
+                            <div style="font-weight: 700; font-size: 13.5px; color: var(--uber-black);">Availability Status</div>
+                            <div style="font-size: 12px; color: var(--text-light);" id="pStatusText">Active on matches</div>
+                        </div>
+                        <label class="switch-container">
+                            <input type="checkbox" id="availabilitySwitch" checked onchange="toggleAvailability()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="section-title" style="margin-bottom: 12px; font-size: 17px;">Active ResolveAI Settle Broker</div>
+                
+                <!-- Settle negotiations terminal -->
+                <div class="dispute-chat-box" id="disputeChatBox">
+                    <div class="chat-bubble system">
+                        Select a recent booking dispute to broker resolution.
+                    </div>
+                </div>
+
+                <div class="chat-action-panel" id="disputeActionPanel" style="display: none;">
+                    <button class="btn-dispute-run" onclick="executeResolveAIDispute()">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <span>Execute ResolveAI Settle Broker</span>
+                    </button>
+                </div>
+
+                <div class="resolve-trace-details" id="resolveTraceDetails">
+                    <div class="resolve-title">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                        <span>ResolveAI Settlement reasoning logs</span>
+                    </div>
+                    <div id="resolveLogsList"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sticky Modern Bottom Navigation Bar -->
+        <div class="bottom-nav" id="bottomNav" style="display: none;">
+            <div class="nav-item active" id="navHome" onclick="switchNav('home')">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" id="navBookings" onclick="switchNav('bookings')">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Bookings</span>
+            </div>
+            <div class="nav-item" id="navDisputes" onclick="switchNav('disputes')">
+                <i class="fa-solid fa-scale-balanced"></i>
+                <span>Settle Broker</span>
+            </div>
+            <div class="nav-item" id="navProfile" onclick="switchNav('profile')">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Profile</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🤖 GOOGLE ANTIGRAVITY TRACE MODAL OVERLAY -->
+    <div class="trace-overlay" id="traceOverlay">
+        <div class="trace-modal">
+            <div class="trace-modal-header">
+                <div class="trace-engine-icon">
+                    <i class="fa-solid fa-atom"></i>
+                </div>
+                <div class="trace-engine-title">
+                    <h3>Google Antigravity Engine</h3>
+                    <p>Coordinating AI Agent pipeline in real-time...</p>
+                </div>
+            </div>
+
+            <div class="trace-steps-container" id="traceStepsContainer">
+                <!-- Step 1 -->
+                <div class="trace-step-row" id="stepRow0">
+                    <div class="step-icon-col">
+                        <div class="step-icon-circle"><i class="fa-solid fa-language"></i></div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-info-card">
+                        <div class="step-info-header">
+                            <span>ZabaanAI: Intent Parsing</span>
+                            <span class="step-status"><i class="fa-solid fa-spinner step-spinner"></i></span>
+                        </div>
+                        <div class="step-details-table" id="stepDetails0"></div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="trace-step-row" id="stepRow1">
+                    <div class="step-icon-col">
+                        <div class="step-icon-circle"><i class="fa-solid fa-brain"></i></div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-info-card">
+                        <div class="step-info-header">
+                            <span>AgriComplex: Risk Assessment</span>
+                            <span class="step-status"></span>
+                        </div>
+                        <div class="step-details-table" id="stepDetails1"></div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="trace-step-row" id="stepRow2">
+                    <div class="step-icon-col">
+                        <div class="step-icon-circle"><i class="fa-solid fa-handshake"></i></div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-info-card">
+                        <div class="step-info-header">
+                            <span>SmartMatch: Operator Ranking</span>
+                            <span class="step-status"></span>
+                        </div>
+                        <div class="step-details-table" id="stepDetails2"></div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="trace-step-row" id="stepRow3">
+                    <div class="step-icon-col">
+                        <div class="step-icon-circle"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-info-card">
+                        <div class="step-info-header">
+                            <span>FairPrice AI: Pricing Broker</span>
+                            <span class="step-status"></span>
+                        </div>
+                        <div class="step-details-table" id="stepDetails3"></div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="trace-step-row" id="stepRow4">
+                    <div class="step-icon-col">
+                        <div class="step-icon-circle"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div class="step-line"></div>
+                    </div>
+                    <div class="step-info-card">
+                        <div class="step-info-header">
+                            <span>ScheduleMind: Slot Booking</span>
+                            <span class="step-status"></span>
+                        </div>
+                        <div class="step-details-table" id="stepDetails4"></div>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="trace-step-row" id="stepRow5">
+                    <div class="step-icon-col">
+                        <div class="step-icon-circle"><i class="fa-solid fa-comment-sms"></i></div>
+                    </div>
+                    <div class="step-info-card">
+                        <div class="step-info-header">
+                            <span>NotifyHub: Alert SMS</span>
+                            <span class="step-status"></span>
+                        </div>
+                        <div class="step-details-table" id="stepDetails5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trace-modal-footer">
+                <button class="btn-modal-unlock" id="btnTraceUnlock" onclick="closeTraceOverlay()">
+                    <span>AI Orchestrator Matching...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📍 BOOKING DETAILS MODAL -->
+    <div class="detail-overlay" id="detailOverlay" onclick="closeDetailOverlay(event)">
+        <div class="detail-modal" id="detailModal">
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: var(--uber-black); margin-bottom: 12px;" id="dServiceTitle">TRACTOR</h3>
+            
+            <div class="map-canvas-container">
+                <div class="map-grid"></div>
+                <div class="map-path"></div>
+                <div class="map-marker provider">
+                    <i class="fa-solid fa-tractor" style="font-size: 20px;"></i>
+                    <span class="marker-label">Tariq Mahmood</span>
+                </div>
+                <div class="map-marker farmer">
+                    <i class="fa-solid fa-street-view" style="font-size: 20px; color: var(--accent);"></i>
+                    <span class="marker-label" style="background: var(--accent); color: #000;">You</span>
+                </div>
+                <div class="map-gps-active">
+                    <i class="fa-solid fa-satellite-dish" style="animation: pulse 1s infinite alternate;"></i> GPS Tracking
+                </div>
+            </div>
+
+            <div style="font-size: 12px; font-weight: 850; margin-bottom: 6px; color: var(--text-light); text-transform: uppercase;">Tractor Operator</div>
+            <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border: 1px solid rgba(0, 194, 112, 0.15);">
+                <div style="font-size: 18px; color: var(--primary-dark);"><i class="fa-solid fa-circle-user"></i></div>
+                <div>
+                    <div style="font-weight: 750; font-size: 13px; color: var(--text-dark);" id="dProviderName">Tariq Mahmood</div>
+                    <div style="font-size: 10.5px; color: var(--text-light);"><i class="fa-solid fa-star" style="color: var(--accent);"></i> 4.8 (42 jobs)</div>
+                </div>
+            </div>
+
+            <div class="detail-row"><span class="details-label">Working Location:</span> <span id="dLocation">Lahore</span></div>
+            <div class="detail-row"><span class="details-label">Booking Urgency:</span> <span id="dUrgency">normal</span></div>
+            <div class="detail-row"><span class="details-label">Scheduled Slot:</span> <span id="dScheduled">2026-05-20</span></div>
+            <div class="detail-row total"><span style="color: var(--text-dark); font-weight: 750;">Total Confirmed Price:</span> <span class="price-val" id="dPrice" style="color: var(--primary-dark);">PKR 5000</span></div>
+            
+            <button class="btn-primary" style="width: 100%; margin-top: 15px;" onclick="closeDetailOverlay(event, true)">Got it</button>
+        </div>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script>
+        const baseUrl = ""; // Serve relative
+        let activeView = "login";
+        let localRecentBookings = [];
+        let curDisputeOrder = null;
+        let authMode = 'login';
+
+        // Translation Dictionary (Bilingual Urdu + English)
+        const I18N = {
+            en: {
+                welcomeTitle: "Welcome to KissanAI",
+                welcomeSubtitle: "Please login to continue",
+                tabLogin: "Login",
+                tabSignup: "Sign Up",
+                nameInputPlaceholder: "Full Name",
+                phoneInputPlaceholder: "Enter Phone Number",
+                roleFarmer: "Farmer",
+                roleProvider: "Provider",
+                authSubmitBtnLogin: "Login / Enter Hub",
+                authSubmitBtnSignup: "Sign Up & Enter Hub",
+                assalamuAlaikum: "Assalamu Alaikum,",
+                locationPunjab: "Lahore, Punjab",
+                slide1Badge: "MATCHING NOW",
+                slide1Title: "AI Agent Smart Match",
+                slide1Desc: "Matched with tractor operators in under 3 minutes.",
+                slide2Badge: "WEEKEND PROMO",
+                slide2Title: "Save 30% on Tractors",
+                slide2Desc: "Rent any tractor this weekend to save big on plowing.",
+                slide3Badge: "URDU VOICE RENT",
+                slide3Title: "Speak & Book Instantly",
+                slide3Desc: "Simply tap the microphone and speak in Roman Urdu or English.",
+                rentTractor: "Rent Tractor",
+                tractorDesc: "Modern plowing machinery",
+                matchHarvester: "Match Harvester",
+                harvesterDesc: "High-efficiency crop reaping",
+                rentThresher: "Rent Thresher",
+                thresherDesc: "Fast Crop threshing services",
+                bookSeeder: "Book Seeder",
+                seederDesc: "Precise crop seed sowing",
+                tapToSpeak: "Tap to speak in Urdu or English",
+                recentBookings: "Recent Bookings",
+                noBookings: "No recent bookings found.",
+                providerPanel: "Provider Panel",
+                providerOperator: "Tractor Service Operator • Lahore",
+                availabilityStatus: "Availability Status",
+                activeOnMatches: "Active on matches",
+                markedAsBusy: "Marked as Busy",
+                activeSettleBroker: "Active ResolveAI Settle Broker",
+                selectDisputeMsg: "Select a recent booking dispute to broker resolution.",
+                executeMediation: "Execute ResolveAI Settle Broker",
+                reasoningLogs: "ResolveAI Settlement reasoning logs",
+                home: "Home",
+                bookings: "Bookings",
+                settleBroker: "Settle Broker",
+                profile: "Profile",
+                antigravityEngine: "Google Antigravity Engine",
+                coordinatingAI: "Coordinating AI Agent pipeline in real-time...",
+                zabaanAI: "ZabaanAI: Intent Parsing",
+                agriComplex: "AgriComplex: Risk Assessment",
+                smartMatch: "SmartMatch: Operator Ranking",
+                fairPrice: "FairPrice AI: Pricing Broker",
+                scheduleMind: "ScheduleMind: Slot Booking",
+                notifyHub: "NotifyHub: Alert SMS",
+                matchingLoader: "AI Orchestrator Matching...",
+                viewBookedDetails: "View Booked Details",
+                operatorLabel: "Tractor Operator",
+                workingLocation: "Working Location:",
+                bookingUrgency: "Booking Urgency:",
+                scheduledSlot: "Scheduled Slot:",
+                totalPrice: "Total Confirmed Price:",
+                gotIt: "Got it",
+                details: "Details",
+                dispute: "Dispute",
+                liveTracking: "Live Tracking",
+                disputeDelay: "Dispute Delay",
+                negotiating: "Negotiating",
+                resolvedLogs: "Resolved Logs",
+                phoneRequired: "Please enter a valid phone number.",
+                nameRequired: "Please enter your name.",
+                authFailed: "Authentication Failed: ",
+                connectionFailed: "Connection failed. Make sure backend is active."
+            },
+            ur: {
+                welcomeTitle: "کِسان اے آئی میں خوش آمدید",
+                welcomeSubtitle: "جاری رکھنے کے لیے لاگ ان کریں",
+                tabLogin: "لاگ ان",
+                tabSignup: "سائن اپ",
+                nameInputPlaceholder: "پورا نام",
+                phoneInputPlaceholder: "فون نمبر درج کریں",
+                roleFarmer: "کِسان",
+                roleProvider: "سروس فراہم کنندہ",
+                authSubmitBtnLogin: "لاگ ان کریں / آگے بڑھیں",
+                authSubmitBtnSignup: "سائن اپ کریں اور آگے بڑھیں",
+                assalamuAlaikum: "السلام علیکم،",
+                locationPunjab: "لاہور، پنجاب",
+                slide1Badge: "میچنگ جاری ہے",
+                slide1Title: "اے آئی اسمارٹ میچ",
+                slide1Desc: "۳ منٹ کے اندر ٹریکٹر والوں سے میچنگ۔",
+                slide2Badge: "خصوصی بچت آفر",
+                slide2Title: "ٹریکٹر پر ۳۰٪ بچت کریں",
+                slide2Desc: "اس ہفتے کے آخر میں ٹریکٹر کرائے پر لیں اور بچت کریں۔",
+                slide3Badge: "آواز سے بکنگ",
+                slide3Title: "بولیں اور فوراً بک کریں",
+                slide3Desc: "بس مائیکرو فون کو دبائیں اور اردو یا رومن اردو میں بولیں۔",
+                rentTractor: "ٹریکٹر کرایہ پر لیں",
+                tractorDesc: "جدید ہل چلانے کی مشینری",
+                matchHarvester: "ہارویسٹر تلاش کریں",
+                harvesterDesc: "فصل کی کٹائی کے لیے بہترین",
+                rentThresher: "تھریشر کرایہ پر لیں",
+                thresherDesc: "فصل کی گہائی کی تیز سروسز",
+                bookSeeder: "سیڈر بک کریں",
+                seederDesc: "بیج بونے کی جدید مشین",
+                tapToSpeak: "اردو یا انگریزی میں بولنے کے لیے مائیک دبائیں",
+                recentBookings: "حالیہ بکنگز",
+                noBookings: "کوئی بکنگ نہیں ملی۔",
+                providerPanel: "فراہم کنندہ کا پینل",
+                providerOperator: "ٹریکٹر سروس آپریٹر • لاہور",
+                availabilityStatus: "دستیابی کی صورتحال",
+                activeOnMatches: "کام کے لیے دستیاب",
+                markedAsBusy: "مصروف",
+                activeSettleBroker: "مسئلہ حل کروانے والا پینل",
+                selectDisputeMsg: "مسئلہ حل کروانے کے لیے بکنگ کا انتخاب کریں۔",
+                executeMediation: "فیصلہ کروائیں (ResolveAI)",
+                reasoningLogs: "ResolveAI فیصلے کی تفصیلات",
+                home: "ہوم",
+                bookings: "میری بکنگز",
+                settleBroker: "فیصلہ پینل",
+                profile: "پروفائل",
+                antigravityEngine: "گوگل اینٹی گریویٹی انجن",
+                coordinatingAI: "ریئل ٹائم میں اے آئی ایجنٹس کام کر رہے ہیں...",
+                zabaanAI: "زبان اے آئی: آواز اور نیت کی تفہیم",
+                agriComplex: "ایگری کمپلیکس: خطرے کا جائزہ",
+                smartMatch: "اسمارٹ میچ: ٹریکٹر والوں کی درجہ بندی",
+                fairPrice: "مناسب قیمت اے آئی: ریٹ فکسنگ",
+                scheduleMind: "شیڈول مائنڈ: بکنگ سلاٹ",
+                notifyHub: "نوٹیفائی ہب: الرٹ ایس ایم ایس",
+                matchingLoader: "میچنگ ہو رہی ہے...",
+                viewBookedDetails: "بکنگ کی تفصیلات دیکھیں",
+                operatorLabel: "ٹریکٹر آپریٹر",
+                workingLocation: "کام کی جگہ:",
+                bookingUrgency: "بکنگ کی ضرورت:",
+                scheduledSlot: "مقررہ تاریخ:",
+                totalPrice: "طے شدہ کل رقم:",
+                gotIt: "ٹھیک ہے",
+                details: "تفصیلات",
+                dispute: "شکایت",
+                liveTracking: "لائیو ٹریکنگ",
+                disputeDelay: "شکایت درج کریں",
+                negotiating: "بات چیت جاری ہے",
+                resolvedLogs: "حل شدہ ریکارڈ",
+                phoneRequired: "براہ کرم درست فون نمبر درج کریں۔",
+                nameRequired: "براہ کرم اپنا نام درج کریں۔",
+                authFailed: "لاگ ان ناکام ہوا: ",
+                connectionFailed: "رابطہ ناکام۔ چیک کریں کہ بیک اینڈ چل رہا ہے۔"
+            }
+        };
+
+        let currentLang = localStorage.getItem('kissan_lang') || 'en';
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('kissan_lang', lang);
+            
+            // Highlight language pill in navbar
+            const enPill = document.getElementById('langDisplayEn');
+            const urPill = document.getElementById('langDisplayUr');
+            if (enPill && urPill) {
+                if (lang === 'ur') {
+                    enPill.style.color = 'rgba(255,255,255,0.5)';
+                    urPill.style.color = 'var(--primary)';
+                    document.body.classList.add('ur-lang');
+                } else {
+                    enPill.style.color = 'var(--primary)';
+                    urPill.style.color = 'rgba(255,255,255,0.5)';
+                    document.body.classList.remove('ur-lang');
+                }
+            }
+            
+            // Highlight explicit buttons in login card if they exist
+            const btnEn = document.getElementById('langSelectBtnEn');
+            const btnUr = document.getElementById('langSelectBtnUr');
+            if (btnEn && btnUr) {
+                if (lang === 'ur') {
+                    btnUr.style.background = 'var(--primary)';
+                    btnUr.style.borderColor = 'var(--primary)';
+                    btnUr.style.color = 'white';
+                    btnEn.style.background = 'transparent';
+                    btnEn.style.borderColor = 'rgba(0,0,0,0.1)';
+                    btnEn.style.color = 'var(--text-light)';
+                } else {
+                    btnEn.style.background = 'var(--primary)';
+                    btnEn.style.borderColor = 'var(--primary)';
+                    btnEn.style.color = 'white';
+                    btnUr.style.background = 'transparent';
+                    btnUr.style.borderColor = 'rgba(0,0,0,0.1)';
+                    btnUr.style.color = 'var(--text-light)';
+                }
+            }
+            
+            // Update all static UI elements
+            updateUIStrings();
+        }
+        
+        function toggleLanguage() {
+            const nextLang = (currentLang === 'en') ? 'ur' : 'en';
+            applyLanguage(nextLang);
+        }
+        
+        function changeLanguage(lang) {
+            applyLanguage(lang);
+        }
+
+        function safeUpdateText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        function updateUIStrings() {
+            const t = I18N[currentLang];
+            
+            // Login View
+            safeUpdateText('welcomeTitle', t.welcomeTitle);
+            safeUpdateText('welcomeSubtitle', t.welcomeSubtitle);
+            safeUpdateText('tabLogin', t.tabLogin);
+            safeUpdateText('tabSignup', t.tabSignup);
+            
+            const nameInput = document.getElementById('nameInput');
+            if (nameInput) nameInput.placeholder = t.nameInputPlaceholder;
+            
+            const phoneInput = document.getElementById('phoneInput');
+            if (phoneInput) phoneInput.placeholder = t.phoneInputPlaceholder;
+            
+            const roleInput = document.getElementById('roleInput');
+            if (roleInput) {
+                roleInput.options[0].text = t.roleFarmer;
+                roleInput.options[1].text = t.roleProvider;
+            }
+            
+            const btn = document.getElementById('authSubmitBtn');
+            if (btn) {
+                btn.innerText = (authMode === 'login') ? t.authSubmitBtnLogin : t.authSubmitBtnSignup;
+            }
+            
+            // Farmer View Welcome
+            safeUpdateText('farmerAssalamu', t.assalamuAlaikum);
+            
+            // Carousel Slides
+            // Slide 1
+            const slide1 = document.querySelector('.carousel-slide.slide-1 .slide-content');
+            if (slide1) {
+                slide1.querySelector('.slide-badge').innerText = t.slide1Badge;
+                slide1.querySelector('h3').innerText = t.slide1Title;
+                slide1.querySelector('p').innerText = t.slide1Desc;
+            }
+            
+            // Slide 2
+            const slide2 = document.querySelector('.carousel-slide.slide-2 .slide-content');
+            if (slide2) {
+                slide2.querySelector('.slide-badge').innerText = t.slide2Badge;
+                slide2.querySelector('h3').innerText = t.slide2Title;
+                slide2.querySelector('p').innerText = t.slide2Desc;
+            }
+            
+            // Slide 3
+            const slide3 = document.querySelector('.carousel-slide.slide-3 .slide-content');
+            if (slide3) {
+                slide3.querySelector('.slide-badge').innerText = t.slide3Badge;
+                slide3.querySelector('h3').innerText = t.slide3Title;
+                slide3.querySelector('p').innerText = t.slide3Desc;
+            }
+            
+            // Service Cards
+            // Tractor
+            const cardGreen = document.querySelector('.service-pastel-card.pastel-green');
+            if (cardGreen) {
+                cardGreen.querySelector('.pastel-badge').innerText = t.roleFarmer;
+                cardGreen.querySelector('h4').innerText = t.rentTractor;
+                cardGreen.querySelector('p').innerText = t.tractorDesc;
+            }
+            // Harvester
+            const cardAmber = document.querySelector('.service-pastel-card.pastel-amber');
+            if (cardAmber) {
+                cardAmber.querySelector('.pastel-badge').innerText = t.roleFarmer;
+                cardAmber.querySelector('h4').innerText = t.matchHarvester;
+                cardAmber.querySelector('p').innerText = t.harvesterDesc;
+            }
+            // Thresher
+            const cardBlue = document.querySelector('.service-pastel-card.pastel-blue');
+            if (cardBlue) {
+                cardBlue.querySelector('.pastel-badge').innerText = t.roleFarmer;
+                cardBlue.querySelector('h4').innerText = t.rentThresher;
+                cardBlue.querySelector('p').innerText = t.thresherDesc;
+            }
+            // Seeder
+            const cardPurple = document.querySelector('.service-pastel-card.pastel-purple');
+            if (cardPurple) {
+                cardPurple.querySelector('.pastel-badge').innerText = t.roleFarmer;
+                cardPurple.querySelector('h4').innerText = t.bookSeeder;
+                cardPurple.querySelector('p').innerText = t.seederDesc;
+            }
+            
+            // Mic Panel
+            const micInstruction = document.querySelector('.mic-instruction');
+            if (micInstruction) micInstruction.innerText = t.tapToSpeak;
+            
+            // Recent Bookings Title
+            const recentTitle = document.querySelector('.section-header .section-title');
+            if (recentTitle) recentTitle.innerText = t.recentBookings;
+            
+            // Provider Panel Profile
+            const pProfile = document.querySelector('.provider-profile-card .p-details');
+            if (pProfile) {
+                pProfile.querySelector('p').innerText = t.providerOperator;
+            }
+            
+            const availabilityLabel = document.querySelector('.status-toggle-row div div');
+            if (availabilityLabel) availabilityLabel.innerText = t.availabilityStatus;
+            
+            // Disputes Tab Title
+            const activeDisputeTitle = document.querySelector('#providerView .section-title');
+            if (activeDisputeTitle) activeDisputeTitle.innerText = t.activeSettleBroker;
+            
+            // Disputes Msg
+            const chatBoxSystem = document.querySelector('#disputeChatBox .chat-bubble.system');
+            if (chatBoxSystem && !curDisputeOrder) {
+                chatBoxSystem.innerText = t.selectDisputeMsg;
+            }
+            
+            // Execute Dispute btn
+            const executeBtn = document.querySelector('.btn-dispute-run span');
+            if (executeBtn) executeBtn.innerText = t.executeMediation;
+            
+            // Dispute logs title
+            const resolveTitle = document.querySelector('.resolve-title span');
+            if (resolveTitle) resolveTitle.innerText = t.reasoningLogs;
+            
+            // Bottom Navigation Items
+            const navHome = document.querySelector('#navHome span');
+            if (navHome) navHome.innerText = t.home;
+            
+            const navBookings = document.querySelector('#navBookings span');
+            if (navBookings) navBookings.innerText = t.bookings;
+            
+            const navDisputes = document.querySelector('#navDisputes span');
+            if (navDisputes) navDisputes.innerText = t.settleBroker;
+            
+            const navProfile = document.querySelector('#navProfile span');
+            if (navProfile) navProfile.innerText = t.profile;
+            
+            // Trace Overlay
+            const traceEngineTitle = document.querySelector('.trace-engine-title h3');
+            if (traceEngineTitle) traceEngineTitle.innerText = t.antigravityEngine;
+            
+            const traceEngineSub = document.querySelector('.trace-engine-title p');
+            if (traceEngineSub) traceEngineSub.innerText = t.coordinatingAI;
+            
+            // Steps
+            const step0 = document.querySelector('#stepRow0 .step-info-header span:first-child');
+            if (step0) step0.innerText = t.zabaanAI;
+            
+            const step1 = document.querySelector('#stepRow1 .step-info-header span:first-child');
+            if (step1) step1.innerText = t.agriComplex;
+            
+            const step2 = document.querySelector('#stepRow2 .step-info-header span:first-child');
+            if (step2) step2.innerText = t.smartMatch;
+            
+            const step3 = document.querySelector('#stepRow3 .step-info-header span:first-child');
+            if (step3) step3.innerText = t.fairPrice;
+            
+            const step4 = document.querySelector('#stepRow4 .step-info-header span:first-child');
+            if (step4) step4.innerText = t.scheduleMind;
+            
+            const step5 = document.querySelector('#stepRow5 .step-info-header span:first-child');
+            if (step5) step5.innerText = t.notifyHub;
+            
+            // Trace footer btn
+            const traceBtn = document.getElementById('btnTraceUnlock');
+            if (traceBtn) {
+                const isReady = traceBtn.classList.contains('ready');
+                traceBtn.querySelector('span').innerText = isReady ? t.viewBookedDetails : t.matchingLoader;
+            }
+            
+            // Details Modal
+            const dOperator = document.querySelector('#detailModal div[style*="font-weight: 850;"]');
+            if (dOperator) dOperator.innerText = t.operatorLabel;
+            
+            const dLabels = document.querySelectorAll('#detailModal .detail-row .details-label');
+            if (dLabels.length >= 3) {
+                dLabels[0].innerText = t.workingLocation;
+                dLabels[1].innerText = t.bookingUrgency;
+                dLabels[2].innerText = t.scheduledSlot;
+            }
+            const dTotalLabel = document.querySelector('#detailModal .detail-row.total span:first-child');
+            if (dTotalLabel) dTotalLabel.innerText = t.totalPrice;
+            
+            const dGotIt = document.querySelector('#detailModal button');
+            if (dGotIt) dGotIt.innerText = t.gotIt;
+            
+            // Re-render recent bookings if there are any
+            if (localRecentBookings.length > 0) {
+                renderBookings(localRecentBookings);
+            }
+        }
+
+        // Auto-sliding Carousel logic
+        let currentSlide = 0;
+        const totalSlides = 3;
+        let carouselInterval;
+
+        function startCarousel() {
+            carouselInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }, 4000);
+        }
+
+        function setCarouselSlide(index) {
+            clearInterval(carouselInterval);
+            currentSlide = index;
+            updateCarousel();
+            startCarousel();
+        }
+
+        function updateCarousel() {
+            const track = document.getElementById('carouselTrack');
+            if (track) {
+                track.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+            }
+            const dots = document.querySelectorAll('.carousel-dots .dot');
+            dots.forEach((dot, idx) => {
+                if (idx === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function setAuthMode(mode) {
+            authMode = mode;
+            const tabLogin = document.getElementById('tabLogin');
+            const tabSignup = document.getElementById('tabSignup');
+            const nameInput = document.getElementById('nameInput');
+            const btn = document.getElementById('authSubmitBtn');
+
+            if (mode === 'login') {
+                tabLogin.style.background = 'var(--primary)';
+                tabLogin.style.color = 'white';
+                tabSignup.style.background = 'transparent';
+                tabSignup.style.color = 'var(--primary)';
+                nameInput.style.display = 'none';
+                btn.innerText = 'Login / Enter Hub';
+            } else {
+                tabSignup.style.background = 'var(--primary)';
+                tabSignup.style.color = 'white';
+                tabLogin.style.background = 'transparent';
+                tabLogin.style.color = 'var(--primary)';
+                nameInput.style.display = 'block';
+                btn.innerText = 'Sign Up & Enter Hub';
+            }
+        }
+
+        async function handleAuth() {
+            const phone = document.getElementById('phoneInput').value;
+            const role = document.getElementById('roleInput').value;
+            const name = document.getElementById('nameInput').value;
+            
+            if(!phone) {
+                alert("Please enter a valid phone number.");
+                return;
+            }
+            if(authMode === 'signup' && !name) {
+                alert("Please enter your name.");
+                return;
+            }
+            
+            try {
+                let response;
+                if (authMode === 'login') {
+                    response = await fetch('/api/auth/login_local', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: phone })
+                    });
+                } else {
+                    response = await fetch('/api/auth/register_local', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: phone, name: name, role: role })
+                    });
+                }
+
+                if(response.ok) {
+                    const data = await response.json();
+                    window.currentUser = data.user;
+                } else {
+                    const err = await response.json();
+                    alert("Authentication Failed: " + (err.detail || "User not found"));
+                    return;
+                }
+            } catch(e) {
+                alert("Auth failed. Check if backend is running.");
+                return;
+            }
+            
+            document.getElementById('loginView').classList.remove('active');
+            
+            // Show bottom nav
+            document.getElementById('bottomNav').style.display = 'flex';
+            
+            if(role === 'farmer') {
+                activeView = "farmer";
+                document.getElementById('farmerView').classList.add('active');
+                document.getElementById('viewToggleBtn').style.display = 'none';
+                switchNav('home');
+            } else {
+                activeView = "provider";
+                document.getElementById('providerView').classList.add('active');
+                document.getElementById('viewToggleBtn').style.display = 'none';
+                switchNav('home');
+            }
+            
+            fetchRecentBookings();
+            startCarousel();
+        }
+
+        // Toggle Views
+        function toggleView() {
+            const fView = document.getElementById('farmerView');
+            const pView = document.getElementById('providerView');
+
+            if (activeView === "farmer") {
+                activeView = "provider";
+                fView.classList.remove('active');
+                pView.classList.add('active');
+            } else {
+                activeView = "farmer";
+                pView.classList.remove('active');
+                fView.classList.add('active');
+            }
+        }
+
+        // Modern Bottom Navigation Tab System
+        function switchNav(tab) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Highlight tab
+            if (tab === 'home') document.getElementById('navHome').classList.add('active');
+            if (tab === 'bookings') document.getElementById('navBookings').classList.add('active');
+            if (tab === 'disputes') document.getElementById('navDisputes').classList.add('active');
+            if (tab === 'profile') document.getElementById('navProfile').classList.add('active');
+
+            const fView = document.getElementById('farmerView');
+            const pView = document.getElementById('providerView');
+            
+            if (window.currentUser && window.currentUser.role === 'farmer') {
+                activeView = "farmer";
+                pView.classList.remove('active');
+                fView.classList.add('active');
+                
+                if (tab === 'bookings') {
+                    // Show skeleton loader then smooth scroll to the bookings list
+                    document.getElementById('skeletonLoader').style.display = 'block';
+                    document.getElementById('bookingsList').style.display = 'none';
+                    setTimeout(() => {
+                        document.getElementById('skeletonLoader').style.display = 'none';
+                        document.getElementById('bookingsList').style.display = 'flex';
+                        document.getElementById('bookingsList').scrollIntoView({ behavior: 'smooth' });
+                    }, 650);
+                } else if (tab === 'disputes') {
+                    activeView = "provider";
+                    fView.classList.remove('active');
+                    pView.classList.add('active');
+                    setTimeout(() => {
+                        document.getElementById('disputeChatBox').scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                } else if (tab === 'profile') {
+                    toggleView();
+                } else {
+                    // home
+                    fView.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                activeView = "provider";
+                fView.classList.remove('active');
+                pView.classList.add('active');
+                
+                if (tab === 'bookings') {
+                    document.getElementById('skeletonLoader').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('skeletonLoader').style.display = 'none';
+                    }, 500);
+                } else if (tab === 'disputes') {
+                    document.getElementById('disputeChatBox').scrollIntoView({ behavior: 'smooth' });
+                } else if (tab === 'profile') {
+                    toggleView();
+                }
+            }
+        }
+
+        // Real Voice Microphone (Web Speech API)
+        function triggerMicListening() {
+            const wrapper = document.getElementById('micWrapper');
+            const card = document.getElementById('transcriptCard');
+            const txt = document.getElementById('transcriptText');
+            const actions = document.getElementById('transcriptActions');
+
+            wrapper.classList.add('listening');
+            card.classList.add('visible');
+            txt.innerText = "Listening to voice commands...";
+            actions.style.display = "none";
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                const recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                recognition.lang = currentLang === 'ur' ? 'ur-PK' : 'en-US';
+
+                recognition.onstart = function() {
+                    txt.innerText = currentLang === 'ur' 
+                        ? "السلام علیکم! بولیں، آواز ریکارڈ کی جا رہی ہے..." 
+                        : "Listening... Please speak now.";
+                };
+
+                recognition.start();
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    wrapper.classList.remove('listening');
+                    txt.innerText = '"' + transcript + '"';
+                    actions.style.display = "flex";
+                };
+                
+                recognition.onerror = function(event) {
+                    wrapper.classList.remove('listening');
+                    if (event.error === 'not-allowed') {
+                        txt.innerText = "Microphone Access Blocked. Please click the lock/settings icon in the browser URL bar and set Microphone to ALLOW.";
+                    } else {
+                        txt.innerText = "Microphone Error (" + event.error + "). Please use the preset text shortcuts below!";
+                    }
+                };
+            } else {
+                wrapper.classList.remove('listening');
+                txt.innerText = "Speech Recognition API not supported in this browser. Please use text shortcuts.";
+            }
+        }
+
+        function clearTranscript() {
+            document.getElementById('transcriptCard').classList.remove('visible');
+        }
+
+        function selectQuickCommand(text) {
+            const card = document.getElementById('transcriptCard');
+            const txt = document.getElementById('transcriptText');
+            const actions = document.getElementById('transcriptActions');
+
+            card.classList.add('visible');
+            txt.innerText = '"' + text + '"';
+            actions.style.display = "flex";
+            
+            // smooth scroll to transcript card
+            card.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Fetch bookings
+        async function fetchRecentBookings() {
+            try {
+                const uid = window.currentUser ? window.currentUser.id : 1;
+                const response = await fetch('/api/booking/list?user_id=' + uid);
+                if (response.ok) {
+                    const list = await response.json();
+                    localRecentBookings = list;
+                    renderBookings(list);
+                }
+            } catch (err) {
+                console.error("Fetch bookings failed", err);
+            }
+        }
+
+        function renderBookings(list) {
+            const container = document.getElementById('bookingsList');
+            const t = I18N[currentLang];
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div style="background:#fff; border:1px solid var(--card-border); border-radius:24px; padding:30px; text-align:center; color:var(--text-light); box-shadow: var(--shadow-sm);">
+                        <i class="fa-solid fa-receipt" style="font-size:36px; opacity:0.3; margin-bottom:10px; color: var(--uber-black);"></i>
+                        <div style="font-size:13.5px; font-weight:700; color: var(--text-dark);">${t.noBookings}</div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = list.map(item => {
+                const status = item.status || "pending";
+                const isResolved = status === "resolved";
+                // Let's translate service type nicely
+                let serviceDisplayName = item.service_type;
+                if (currentLang === 'ur') {
+                    if (item.service_type.toLowerCase() === 'tractor') serviceDisplayName = 'ٹریکٹر';
+                    else if (item.service_type.toLowerCase() === 'harvester') serviceDisplayName = 'ہارویسٹر';
+                    else if (item.service_type.toLowerCase() === 'thresher') serviceDisplayName = 'تھریشر';
+                    else if (item.service_type.toLowerCase() === 'seeder') serviceDisplayName = 'سیڈر';
+                }
+                
+                // Let's translate status nicely
+                let statusDisplayName = status.toUpperCase();
+                if (currentLang === 'ur') {
+                    if (status === 'confirmed') statusDisplayName = 'تصدیق شدہ';
+                    else if (status === 'pending') statusDisplayName = 'انتظار میں';
+                    else if (status === 'resolved') statusDisplayName = 'حل شدہ';
+                    else if (status === 'disputed') statusDisplayName = 'تنازعہ';
+                }
+
+                // Let's translate urgency nicely
+                let urgencyDisplayName = item.urgency;
+                if (currentLang === 'ur') {
+                    if (item.urgency === 'high' || item.urgency === 'urgent') urgencyDisplayName = 'فوری';
+                    else urgencyDisplayName = 'عام';
+                }
+
+                return `
+                    <div class="booking-card" style="text-align: ${currentLang === 'ur' ? 'right' : 'left'};">
+                        <div class="card-top" style="flex-direction: ${currentLang === 'ur' ? 'row-reverse' : 'row'};">
+                            <div class="service-info" style="text-align: ${currentLang === 'ur' ? 'right' : 'left'};">
+                                <h4>${serviceDisplayName}</h4>
+                                <p><i class="fa-solid fa-location-dot"></i> ${item.location} • ${urgencyDisplayName} ${currentLang === 'ur' ? 'ضرورت' : 'urgency'}</p>
+                            </div>
+                            <span class="status-badge ${status}">${statusDisplayName}</span>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="card-bottom" style="flex-direction: ${currentLang === 'ur' ? 'row-reverse' : 'row'};">
+                            <div class="meta-col" style="align-items: ${currentLang === 'ur' ? 'flex-end' : 'flex-start'};">
+                                <span class="meta-label">${currentLang === 'ur' ? 'مقررہ تاریخ' : 'Scheduled Date'}</span>
+                                <span class="meta-val">${item.scheduled_time.split('T')[0]}</span>
+                            </div>
+                            <div class="meta-col" style="align-items: ${currentLang === 'ur' ? 'flex-start' : 'flex-end'};">
+                                <span class="meta-label">${currentLang === 'ur' ? 'کل قیمت' : 'Total Price'}</span>
+                                <span class="price-val">${currentLang === 'ur' ? 'روپے' : 'PKR'} ${item.price}</span>
+                            </div>
+                        </div>
+                        <div class="card-actions" style="justify-content: ${currentLang === 'ur' ? 'flex-start' : 'flex-end'}; flex-direction: ${currentLang === 'ur' ? 'row-reverse' : 'row'}; gap: 8px;">
+                            <button class="action-sub-btn details" onclick='openDetailModal(${JSON.stringify(item)})'>
+                                <i class="fa-solid fa-info-circle"></i> ${t.details}
+                            </button>
+                            ${!isResolved ? `
+                                <button class="action-sub-btn dispute" onclick='triggerDisputeRoute(${JSON.stringify(item)})'>
+                                    <i class="fa-solid fa-triangle-exclamation"></i> ${t.dispute}
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Submission with Google Antigravity Real-Time timeline visualizer
+        async function submitSpeechInput() {
+            let text = document.getElementById('transcriptText').innerText.replace(/"/g, '');
+            if (text === "Listening to voice commands...") return;
+
+            document.getElementById('transcriptCard').classList.remove('visible');
+            
+            // Show overlay & reset step rows
+            const overlay = document.getElementById('traceOverlay');
+            overlay.style.display = "flex";
+            
+            for(let i=0; i<6; i++) {
+                document.getElementById('stepRow' + i).className = "trace-step-row";
+                document.getElementById('stepDetails' + i).innerHTML = "";
+            }
+            
+            document.getElementById('btnTraceUnlock').className = "btn-modal-unlock";
+            document.getElementById('btnTraceUnlock').innerHTML = "<span>AI Orchestrator Matching...</span>";
+
+            try {
+                const uid = window.currentUser ? window.currentUser.id : 1;
+                const response = await fetch('/api/antigravity/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ raw_input: text, user_id: uid })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    animateTraceTimeline(data.trace, data.booking);
+                } else {
+                    alert("Antigravity matching failed.");
+                    overlay.style.display = "none";
+                }
+            } catch (err) {
+                alert("Connection failed. Make sure backend is active.");
+                overlay.style.display = "none";
+            }
+        }
+
+        function animateTraceTimeline(trace, booking) {
+            let step = 0;
+            
+            function runNextStep() {
+                if (step < 6) {
+                    const row = document.getElementById('stepRow' + step);
+                    row.classList.add('active');
+                    
+                    // Render details
+                    const det = document.getElementById('stepDetails' + step);
+                    const stepData = trace[step].details;
+                    
+                    let html = "";
+                    for (const [key, val] of Object.entries(stepData)) {
+                        if (typeof val !== 'object') {
+                            html += `<div class="step-details-row"><span class="details-label">${key.replace(/_/g, ' ')}:</span> <span>${val}</span></div>`;
+                        }
+                    }
+                    det.innerHTML = html;
+
+                    setTimeout(() => {
+                        row.classList.remove('active');
+                        row.classList.add('completed');
+                        step++;
+                        runNextStep();
+                    }, 1200);
+                } else {
+                    // Complete overlay
+                    const btn = document.getElementById('btnTraceUnlock');
+                    btn.className = "btn-modal-unlock ready";
+                    btn.innerHTML = `<span>View Booked Details</span> <i class="fa-solid fa-arrow-right"></i>`;
+                    
+                    // Cache booking context inside button trigger
+                    btn.onclick = () => {
+                        closeTraceOverlay();
+                        openDetailModal(booking);
+                    };
+                }
+            }
+
+            runNextStep();
+        }
+
+        function closeTraceOverlay() {
+            document.getElementById('traceOverlay').style.display = "none";
+            fetchRecentBookings();
+        }
+
+        // Booking details GPS tracking Modal
+        function openDetailModal(item) {
+            document.getElementById('dServiceTitle').innerText = item.service_type.toUpperCase();
+            document.getElementById('dLocation').innerText = item.location;
+            document.getElementById('dUrgency').innerText = item.urgency;
+            document.getElementById('dScheduled').innerText = item.scheduled_time.split('T')[0];
+            document.getElementById('dPrice').innerText = "PKR " + item.price;
+            
+            document.getElementById('detailOverlay').style.display = "flex";
+        }
+
+        function closeDetailOverlay(e, force = false) {
+            if (e.target === document.getElementById('detailOverlay') || force) {
+                document.getElementById('detailOverlay').style.display = "none";
+            }
+        }
+
+        // Provider side - toggle availability
+        async function toggleAvailability() {
+            const toggle = document.getElementById('availabilitySwitch');
+            const txt = document.getElementById('pStatusText');
+            
+            txt.innerText = "Processing...";
+            try {
+                const response = await fetch(`/api/provider/toggle_availability/1?available=${toggle.checked}`, {
+                    method: 'POST'
+                });
+                if (response.ok) {
+                    txt.innerText = toggle.checked ? "Open for new bookings" : "Marked as Busy";
+                }
+            } catch(e) {
+                txt.innerText = "Error toggle";
+            }
+        }
+
+        // Dispute broker routing
+        function triggerDisputeRoute(order) {
+            curDisputeOrder = order;
+            switchNav('disputes'); // Highlight and switch to dispute settle tab
+            
+            const chatBox = document.getElementById('disputeChatBox');
+            chatBox.innerHTML = `
+                <div class="chat-bubble farmer">
+                    Farmer dispute initiated for Booking #${order.id}.
+                </div>
+                <div class="chat-bubble system">
+                    ⚠️ Ready to execute ResolveAI Settle Broker.
+                </div>
+            `;
+            
+            document.getElementById('disputeActionPanel').style.display = "block";
+            document.getElementById('resolveTraceDetails').classList.remove('visible');
+        }
+
+        // Execute Dispute Broker backend API
+        async function executeResolveAIDispute() {
+            if (!curDisputeOrder) return;
+            
+            const btn = document.querySelector('.btn-dispute-run');
+            btn.innerHTML = `<i class="fa-solid fa-spinner spin"></i> Resolving Settle Broker...`;
+            
+            try {
+                const response = await fetch(`/api/booking/${curDisputeOrder.id}/dispute`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ reason: "Tractor delayed 1 hour, farmer requesting price adjustment." })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    const chatBox = document.getElementById('disputeChatBox');
+                    chatBox.innerHTML += `
+                        <div class="chat-bubble system">
+                            ✅ Dispute Settle Confirmed! Status updated in database to RESOLVED. Settle price: PKR ${result.booking.price}.
+                        </div>
+                    `;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    
+                    document.getElementById('disputeActionPanel').style.display = "none";
+                    
+                    // Show final Resolve trace
+                    const traceList = document.getElementById('resolveLogsList');
+                    traceList.innerHTML = result.trace.map(t => {
+                        let innerDetails = "";
+                        for (const [k, v] of Object.entries(t.details)) {
+                            innerDetails += ` [${k}: ${v}]`;
+                        }
+                        return `
+                            <div class="resolve-trace-item">
+                                <i class="fa-solid fa-circle-chevron-right"></i>
+                                <div><strong>${t.step}:</strong> ${innerDetails}</div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    document.getElementById('resolveTraceDetails').classList.add('visible');
+                    fetchRecentBookings(); // Refresh cache
+                }
+            } catch(e) {
+                alert("Settle dispute failed.");
+            } finally {
+                btn.innerHTML = `<i class="fa-solid fa-scale-balanced"></i> <span>Execute ResolveAI Settle Broker</span>`;
+            }
+        }
+
+        // Initialize bilingual settings on startup
+        applyLanguage(currentLang);
+    </script>
+</body>
+</html>
