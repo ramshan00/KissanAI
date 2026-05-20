@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WebSocketService {
-  final String wsBaseUrl = const String.fromEnvironment('WS_URL', defaultValue: "wss://ramsha00-kissanapp.hf.space");
+  final String wsBaseUrl = const String.fromEnvironment('WS_URL', defaultValue: "ws://10.0.2.2:8000");
   WebSocketChannel? _farmerChannel;
   WebSocketChannel? _providerChannel;
 

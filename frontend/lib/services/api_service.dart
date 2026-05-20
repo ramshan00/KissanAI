@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  // Configured to support Hugging Face production deployments via --dart-define
-  final String baseUrl = const String.fromEnvironment('API_URL', defaultValue: "https://ramsha00-kissanapp.hf.space");
+  // Configured to support local Wi-Fi development for physical phones.
+  final String baseUrl = const String.fromEnvironment('API_URL', defaultValue: "http://192.168.200.114:8000");
   late final Dio _dio;
 
   ApiService() {
