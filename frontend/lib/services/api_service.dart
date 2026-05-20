@@ -16,6 +16,17 @@ class ApiService {
         "Accept": "application/json",
       },
     ));
+
+    // Add interceptor to inject JWT if present
+    _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
+      // Retrieve token from SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('jwt_token');
+      if (token != null && token.isNotEmpty) {
+        options.headers["Authorization"] = "Bearer $token";
+      }
+      return handler.next(options);
+    }));
   }
 
   /// Authenticates user via local backend.
@@ -25,7 +36,13 @@ class ApiService {
         "/api/auth/login_local",
         data: {"phone": phone},
       );
-      return response.data;
+      final data = response.data as Map<String, dynamic>;
+      // Persist JWT for subsequent requests
+      if (data.containsKey('token')) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('jwt_token', data['token'] as String);
+      }
+      return data;
     } on DioException catch (e) {
       throw Exception("Login failed: ${e.response?.data['detail'] ?? e.message}");
     }
