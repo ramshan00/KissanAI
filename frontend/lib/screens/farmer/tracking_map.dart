@@ -53,7 +53,7 @@ class _TrackingMapScreenState extends State<TrackingMapScreen> {
     const LatLng farmerLatLng = LatLng(farmerLat, farmerLng);
 
     // Dynamic distance tracking calculation
-    final distance = const Distance().as(
+    final distance = Distance().as(
       LengthUnit.Meter,
       providerLatLng,
       farmerLatLng,
