@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../providers/booking_provider.dart';
 import 'register_screen.dart';
 import '../farmer/dashboard.dart';
+import '../../theme/app_colors.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;
@@ -95,6 +96,14 @@ class _OtpScreenState extends State<OtpScreen> {
           ),
         );
       }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    }
   }
 
   @override
@@ -136,7 +145,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.white.withOpacity(0.1)),
                           ),
-                          child: const Icon(Icons.security, size: 50, color: Colors.emeraldAccent),
+                          child: const Icon(Icons.security, size: 50, color: AppColors.emeraldAccent),
                         ),
                       ),
                       
@@ -178,7 +187,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                     keyboardType: TextInputType.number,
                                     textAlign: TextAlign.center,
                                     maxLength: 1,
-                                    style: const TextStyle(color: Colors.emeraldAccent, fontSize: 22, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(color: AppColors.emeraldAccent, fontSize: 22, fontWeight: FontWeight.bold),
                                     decoration: InputDecoration(
                                       counterText: "",
                                       filled: true,
@@ -189,7 +198,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
-                                        borderSide: const BorderSide(color: Colors.emeraldAccent, width: 2),
+                                        borderSide: const BorderSide(color: AppColors.emeraldAccent, width: 2),
                                       ),
                                     ),
                                     onChanged: (val) {
@@ -208,7 +217,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.emeraldAccent,
+                                backgroundColor: AppColors.emeraldAccent,
                                 minimumSize: const Size(double.infinity, 52),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                               ),
@@ -239,7 +248,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               ? "Resend Code in ${_timerSeconds}s" 
                               : "Resend Code",
                             style: TextStyle(
-                              color: _timerSeconds > 0 ? Colors.white30 : Colors.emeraldAccent,
+                              color: _timerSeconds > 0 ? Colors.white30 : AppColors.emeraldAccent,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

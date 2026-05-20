@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/booking_provider.dart';
+import '../../theme/app_colors.dart';
 
 class DisputeMediationScreen extends StatefulWidget {
   const DisputeMediationScreen({super.key});
@@ -149,7 +150,7 @@ class _DisputeMediationScreenState extends State<DisputeMediationScreen> {
     if (prov.isLoading) {
       return Container(
         padding: const EdgeInsets.all(30),
-        color: Colors.black25,
+        color: Colors.black26,
         child: const Center(
           child: CircularProgressIndicator(color: Colors.redAccent),
         ),
@@ -171,9 +172,9 @@ class _DisputeMediationScreenState extends State<DisputeMediationScreen> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.check_circle, color: Colors.emeraldAccent, size: 20),
+                Icon(Icons.check_circle, color: AppColors.emeraldAccent, size: 20),
                 SizedBox(width: 8),
-                Text("DISPUTE RESOLVED BY AGENT", style: TextStyle(color: Colors.emeraldAccent, fontWeight: FontWeight.bold)),
+                Text("DISPUTE RESOLVED BY AGENT", style: TextStyle(color: AppColors.emeraldAccent, fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 8),

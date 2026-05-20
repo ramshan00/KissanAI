@@ -49,10 +49,10 @@ class KissanApp extends StatelessWidget {
                 bodyLarge: TextStyle(color: Colors.white70),
                 bodyMedium: TextStyle(color: Colors.white60),
               ),
-              cardTheme: CardTheme(
-                color: Colors.white.withOpacity(0.04),
+              cardTheme: const CardThemeData(
+                color: Color(0x0AFFFFFF),
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
               ),
             ),
             home: const SplashScreen(),
