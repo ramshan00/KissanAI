@@ -65,7 +65,7 @@ class _TrackingMapScreenState extends State<TrackingMapScreen> {
         child: Column(
           children: [
             // Header stats
-            _buildTrackingHeader(prov, distance),
+            _buildTrackingHeader(prov, distance.round()),
 
             // Map Widget Container
             Expanded(
