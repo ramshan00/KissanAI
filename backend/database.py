@@ -10,19 +10,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL == "postgresql://user:password@localhost:5432/kissanai":
     DATABASE_URL = None
-
-IS_POSTGRES = False
-
-if DATABASE_URL and (DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://")):
-    try:
-        import psycopg2
-        # Try a quick test connection (3s timeout) to see if database is reachable
-        conn = psycopg2.connect(DATABASE_URL, connect_timeout=3)
-        conn.close()
-        IS_POSTGRES = True
-    except Exception as e:
-        print(f"WARNING: PostgreSQL configured but unreachable ({e}). Falling back to SQLite local database.")
-        IS_POSTGRES = False
+IS_POSTGRES = DATABASE_URL and DATABASE_URL.startswith("postgresql://")
 
 # SQLite fallback path
 DB_PATH = Path(__file__).parent / "kissanai.db"
@@ -36,8 +24,8 @@ def get_connection():
             # Connect to PostgreSQL using standard psycopg2 driver
             conn = psycopg2.connect(DATABASE_URL, connection_factory=RealDictConnection)
             return conn
-        except Exception as e:
-            print(f"WARNING: PostgreSQL connection failed at runtime ({e}). Falling back to SQLite.")
+        except ImportError:
+            print("WARNING: psycopg2 not installed. Falling back to SQLite local database.")
     
     # SQLite local driver fallback
     conn = sqlite3.connect(DB_PATH)
