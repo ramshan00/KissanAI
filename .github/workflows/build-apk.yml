@@ -34,7 +34,7 @@ jobs:
           
       - name: Install Dependencies
         working-directory: ./frontend
-        run: flutter pub get
+        run: flutter pub upgrade
 
       - name: Build APK
         working-directory: ./frontend
