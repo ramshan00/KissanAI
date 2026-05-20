@@ -14,8 +14,8 @@ async def get_admin_metrics():
         conn = get_connection()
         cur = conn.cursor()
         
-        import os
-        is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+        from backend.database import IS_POSTGRES
+        is_postgres = IS_POSTGRES
         
         # 1. Total users
         cur.execute("SELECT COUNT(*) FROM users")

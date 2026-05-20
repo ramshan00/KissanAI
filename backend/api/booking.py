@@ -101,8 +101,8 @@ async def list_bookings(user_id: Optional[int] = None):
     conn = get_connection()
     cur = conn.cursor()
     
-    import os
-    is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+    from backend.database import IS_POSTGRES
+    is_postgres = IS_POSTGRES
     
     if user_id is not None:
         query = "SELECT * FROM bookings WHERE user_id = %s ORDER BY id DESC" if is_postgres else "SELECT * FROM bookings WHERE user_id = ? ORDER BY id DESC"
@@ -121,8 +121,8 @@ async def get_booking(booking_id: int):
     conn = get_connection()
     cur = conn.cursor()
     
-    import os
-    is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+    from backend.database import IS_POSTGRES
+    is_postgres = IS_POSTGRES
     
     query = "SELECT * FROM bookings WHERE id = %s" if is_postgres else "SELECT * FROM bookings WHERE id = ?"
     cur.execute(query, (booking_id,))

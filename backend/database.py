@@ -8,6 +8,8 @@ load_dotenv()
 
 # Determine database url
 DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL == "postgresql://user:password@localhost:5432/kissanai":
+    DATABASE_URL = None
 IS_POSTGRES = DATABASE_URL and DATABASE_URL.startswith("postgresql://")
 
 # SQLite fallback path

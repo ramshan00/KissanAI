@@ -89,8 +89,8 @@ async def ws_track_provider(websocket: WebSocket, booking_id: int):
                     conn = get_connection()
                     cur = conn.cursor()
                     
-                    import os
-                    is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+                    from backend.database import IS_POSTGRES
+                    is_postgres = IS_POSTGRES
                     
                     query = """
                         INSERT INTO tracking_logs (booking_id, provider_id, latitude, longitude)

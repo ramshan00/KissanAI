@@ -1,35 +1,29 @@
-import sys
+import os
+import glob
 
-file_path = 'backend/antigravity/orchestrator.py'
-with open(file_path, 'r', encoding='utf-8') as f:
-    content = f.read()
-
-# Remove try/except logic around genai and remove `is_gemini_active`
-import re
-
-def clean_file(content):
-    # Constructor changes
-    content = re.sub(
-        r'        self\.is_gemini_active = False\s*# Enable real Gemini integration.*?\n        if self\.api_key.*?\n.*?\n.*?\n.*?\n.*?\n.*?\n.*?\n',
-        r'''        if not self.api_key or len(self.api_key.strip()) < 10:
-            raise Exception("GEMINI_API_KEY is missing or invalid! Production mode requires real API integrations.")
-        genai.configure(api_key=self.api_key)
-        print("Google Antigravity Engine: Real Gemini API integration activated successfully!")\n''',
-        content,
-        flags=re.DOTALL
-    )
-
-    # Replace specific `if self.is_gemini_active:` with direct execution
-    # First ZabaanAI
-    content = re.sub(
-        r'        if self\.is_gemini_active:\n            try:\n',
-        r'        try:\n',
-        content
-    )
+def refactor_dir(base_dir):
+    pattern = os.path.join(base_dir, "backend", "**", "*.py")
+    files = glob.glob(pattern, recursive=True)
+    target = 'is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")'
+    replacement = 'from backend.database import IS_POSTGRES; is_postgres = IS_POSTGRES'
     
-    # Remove else rule-based fallbacks for ZabaanAI
-    # Since regex is risky, I'll just use string replacement for specific parts if possible, or build a parser.
-    return content
+    for filepath in files:
+        if "database.py" in filepath:
+            continue
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        if target in content:
+            print(f"Refactoring {filepath}")
+            # Also clean up the 'import os' if it's on the line above it
+            content = content.replace("import os\n    " + target, "from backend.database import IS_POSTGRES\n    is_postgres = IS_POSTGRES")
+            content = content.replace("import os\n        " + target, "from backend.database import IS_POSTGRES\n        is_postgres = IS_POSTGRES")
+            content = content.replace("import os\n                    " + target, "from backend.database import IS_POSTGRES\n                    is_postgres = IS_POSTGRES")
+            content = content.replace(target, replacement)
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
 
-with open(file_path, 'w', encoding='utf-8') as f:
-    f.write(clean_file(content))
+print("Refactoring local...")
+refactor_dir(r"d:\Kissanapp")
+print("Refactoring HF...")
+refactor_dir(r"d:\hf_kissanapp")
+print("Done!")

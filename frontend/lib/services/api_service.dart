@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 class ApiService {
   // Configured to support Hugging Face production deployments via --dart-define
-  final String baseUrl = const String.fromEnvironment('API_URL', defaultValue: "http://127.0.0.1:8000");
+  final String baseUrl = const String.fromEnvironment('API_URL', defaultValue: "https://ramsha00-kissanapp.hf.space");
   late final Dio _dio;
 
   ApiService() {

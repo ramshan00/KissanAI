@@ -34,8 +34,8 @@ async def register_local(payload: LocalRegisterRequest):
     conn = get_connection()
     cur = conn.cursor()
     
-    import os
-    is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+    from backend.database import IS_POSTGRES
+    is_postgres = IS_POSTGRES
     
     query_check = "SELECT * FROM users WHERE phone = %s" if is_postgres else "SELECT * FROM users WHERE phone = ?"
     cur.execute(query_check, (phone,))
@@ -95,8 +95,8 @@ async def login_local(payload: LocalLoginRequest):
     conn = get_connection()
     cur = conn.cursor()
     
-    import os
-    is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+    from backend.database import IS_POSTGRES
+    is_postgres = IS_POSTGRES
     
     query_check = "SELECT * FROM users WHERE phone = %s" if is_postgres else "SELECT * FROM users WHERE phone = ?"
     cur.execute(query_check, (phone,))
@@ -136,8 +136,8 @@ async def login_with_token(payload: TokenAuthRequest):
         cur = conn.cursor()
         
         # Check SQLite vs Postgres syntax
-        import os
-        is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+        from backend.database import IS_POSTGRES
+        is_postgres = IS_POSTGRES
         
         query_check = "SELECT * FROM users WHERE phone = %s" if is_postgres else "SELECT * FROM users WHERE phone = ?"
         cur.execute(query_check, (phone,))
@@ -198,8 +198,8 @@ async def get_me(current_user_claims: dict = Depends(get_current_user)):
     conn = get_connection()
     cur = conn.cursor()
     
-    import os
-    is_postgres = os.getenv("DATABASE_URL") and os.getenv("DATABASE_URL").startswith("postgresql://")
+    from backend.database import IS_POSTGRES
+    is_postgres = IS_POSTGRES
     
     query = "SELECT * FROM users WHERE phone = %s" if is_postgres else "SELECT * FROM users WHERE phone = ?"
     cur.execute(query, (phone,))
