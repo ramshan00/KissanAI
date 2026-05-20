@@ -1,13 +1,11 @@
----
+
 title: Kissanai
-emoji: 🐢
+emoji: 🌾
 colorFrom: indigo
 colorTo: red
 sdk: docker
 pinned: false
 ---
-
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 # 🌾 KissanAI – High-Level System Design
 
@@ -19,9 +17,9 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 
 KissanAI is a **mobile-first agricultural marketplace** that connects farmers with machinery operators using an **AI-powered orchestration system**.
 
-It supports:
+### Features:
 - 📱 Voice + Text booking
-- 🤖 AI matching, pricing, scheduling
+- 🤖 AI matching, pricing & scheduling
 - 📍 Live GPS tracking
 - 🔐 Firebase authentication
 - ☁️ FastAPI backend (Hugging Face Spaces)
@@ -45,15 +43,14 @@ flowchart LR
 
 ## 🧠 AI Agent Distribution
 
-```mermaid
-pie title AI Workload
-    "ZabaanAI (Voice Processing)" : 20
-    "SmartMatch AI (Matching)" : 20
-    "FairPrice AI (Pricing)" : 15
-    "ScheduleMind AI (Scheduling)" : 15
-    "AgriComplex AI (Risk Analysis)" : 15
-    "ResolveAI (Disputes)" : 15
-```
+| AI Agent           | Role               | Workload |
+| ------------------ | ------------------ | -------- |
+| 🗣️ ZabaanAI       | Voice Processing   | 20%      |
+| 🤝 SmartMatch AI   | Operator Matching  | 20%      |
+| 💰 FairPrice AI    | Pricing Engine     | 15%      |
+| 📅 ScheduleMind AI | Scheduling         | 15%      |
+| ⚙️ AgriComplex AI  | Risk Analysis      | 15%      |
+| ⚖️ ResolveAI       | Dispute Resolution | 15%      |
 
 ---
 
@@ -85,13 +82,12 @@ flowchart TD
 
 ## 🔌 External Integrations
 
-```mermaid
-pie title External Services
-    "Google Gemini API" : 40
-    "Firebase Auth" : 25
-    "OpenStreetMap" : 20
-    "Hugging Face Hosting" : 15
-```
+| Service             | Purpose                  |
+| ------------------- | ------------------------ |
+| Google Gemini API   | AI reasoning engine      |
+| Firebase Auth       | Phone OTP authentication |
+| OpenStreetMap       | Live maps                |
+| Hugging Face Spaces | Backend hosting          |
 
 ---
 
@@ -129,9 +125,5 @@ KissanAI is an **AI-driven agricultural ecosystem** where:
 
 ## 👩‍💻 Authors
 
-Ramsha Noshad
-Urooj Sadik
-
-
-Just tell 👍
-```
+* Ramsha Noshad
+* Urooj Sadik
