@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-# Install any system dependencies if needed (none required for this project)
+# Install system dependencies
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -8,8 +8,8 @@ WORKDIR /app
 # Copy the repository contents into the container
 COPY . /app
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies (requirements.txt is inside backend/)
+RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Hugging Face Spaces expects port 7860 for Docker SDK
 EXPOSE 7860
