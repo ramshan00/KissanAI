@@ -11,19 +11,58 @@ from backend.database import get_connection
 load_dotenv()
 
 def safe_json_loads(text: str) -> Dict[str, Any]:
+    """Robustly parse JSON from LLM output, handling extra data, markdown fences, etc."""
     text = text.strip()
+    # Strip markdown code fences if present
+    text = re.sub(r'^```(?:json)?\s*', '', text)
+    text = re.sub(r'\s*```\s*$', '', text)
+    text = text.strip()
+
+    # Attempt 1: Direct parse
     try:
         return json.loads(text)
-    except Exception:
-        import re
-        match = re.search(r'\{.*\}', text, re.DOTALL)
-        if match:
-            try:
-                return json.loads(match.group(0))
-            except Exception:
-                pass
-        text = text.replace('```json', '').replace('```', '').strip()
-        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Attempt 2: Find the first complete JSON object using brace matching
+    start = text.find('{')
+    if start != -1:
+        depth = 0
+        in_string = False
+        escape = False
+        for i in range(start, len(text)):
+            c = text[i]
+            if escape:
+                escape = False
+                continue
+            if c == '\\':
+                if in_string:
+                    escape = True
+                continue
+            if c == '"' and not escape:
+                in_string = not in_string
+                continue
+            if in_string:
+                continue
+            if c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+                if depth == 0:
+                    try:
+                        return json.loads(text[start:i+1])
+                    except json.JSONDecodeError:
+                        break
+
+    # Attempt 3: Greedy regex match (fallback)
+    match = re.search(r'\{.*\}', text, re.DOTALL)
+    if match:
+        try:
+            return json.loads(match.group(0))
+        except json.JSONDecodeError:
+            pass
+
+    raise ValueError(f"Could not parse JSON from LLM response: {text[:200]}")
 
 
 class AntigravityOrchestrator:
@@ -56,7 +95,7 @@ class AntigravityOrchestrator:
         request_id = self.start_trace()
 
         # ---- Step 1: Language understanding (ZabaanAI NLP) ----
-        model = genai.GenerativeModel("gemini-3.1-flash-lite")
+        model = genai.GenerativeModel("gemini-2.0-flash-lite")
         prompt_zabaan = f"""
         You are ZabaanAI, the advanced Urdu/English Natural Language Processor for KissanAI.
         Analyze the following agricultural booking request from a Pakistani farmer:
@@ -295,7 +334,7 @@ class AntigravityOrchestrator:
         cur.execute("SELECT * FROM providers WHERE id = ?", (booking["provider_id"],))
         provider = dict(cur.fetchone())
 
-        model = genai.GenerativeModel("gemini-3.1-flash-lite")
+        model = genai.GenerativeModel("gemini-2.0-flash-lite")
         prompt = f"""
         You are ResolveAI, the dynamic dispute mediator for KissanAI.
         You are mediating a dispute between:
