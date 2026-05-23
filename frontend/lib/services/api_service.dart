@@ -3,54 +3,68 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  // Configured to point to the deployed Hugging Face backend.
-  final String baseUrl = const String.fromEnvironment('API_URL', defaultValue: "https://ramsha00-kissanapp.hf.space");
+  // FIX: proper runtime-safe baseUrl handling
+  final String baseUrl = const String.fromEnvironment(
+    'API_URL',
+    defaultValue: "https://ramsha00-kissanapp.hf.space",
+  );
+
   late final Dio _dio;
 
   ApiService() {
-    _dio = Dio(BaseOptions(
-      baseUrl: baseUrl,
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 45),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-    ));
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl,
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 45),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+      ),
+    );
 
-    // Add interceptor to inject JWT if present
-    _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
-      // Retrieve token from SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('jwt_token');
-      if (token != null && token.isNotEmpty) {
-        options.headers["Authorization"] = "Bearer $token";
-      }
-      return handler.next(options);
-    }));
+    // JWT interceptor
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final prefs = await SharedPreferences.getInstance();
+          final token = prefs.getString('jwt_token');
+
+          if (token != null && token.isNotEmpty) {
+            options.headers["Authorization"] = "Bearer $token";
+          }
+
+          return handler.next(options);
+        },
+      ),
+    );
   }
 
-  /// Authenticates user via local backend.
+  // LOGIN
   Future<Map<String, dynamic>> loginLocal(String phone) async {
     try {
       final response = await _dio.post(
         "/api/auth/login_local",
         data: {"phone": phone},
       );
+
       final data = response.data as Map<String, dynamic>;
-      // Persist JWT for subsequent requests
+
       if (data.containsKey('token')) {
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('jwt_token', data['token'] as String);
+        await prefs.setString('jwt_token', data['token']);
       }
+
       return data;
     } on DioException catch (e) {
-      throw Exception("Login failed: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Login failed: ${e.response?.data ?? e.message}");
     }
   }
 
-  /// Registers user via local backend.
-  Future<Map<String, dynamic>> registerLocal(String phone, String name, String role) async {
+  // REGISTER
+  Future<Map<String, dynamic>> registerLocal(
+      String phone, String name, String role) async {
     try {
       final response = await _dio.post(
         "/api/auth/register_local",
@@ -60,25 +74,30 @@ class ApiService {
           "role": role,
         },
       );
+
       return response.data;
     } on DioException catch (e) {
-      throw Exception("Registration failed: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Registration failed: ${e.response?.data ?? e.message}");
     }
   }
 
-  /// Lists all active and historical bookings, optionally filtered by user ID.
+  // BOOKINGS LIST
   Future<List<dynamic>> fetchBookings(int userId) async {
     try {
-      final response = await _dio.get("/api/booking/list", queryParameters: {"user_id": userId});
-      return response.data;
+      final response = await _dio.get(
+        "/api/booking/list",
+        queryParameters: {"user_id": userId},
+      );
+
+      return List<dynamic>.from(response.data);
     } on DioException catch (e) {
-      throw Exception("Failed to load bookings: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Failed to load bookings: ${e.response?.data ?? e.message}");
     }
   }
 
-  /// Transmits agricultural voice recording to the Whisper speech-to-text multipart endpoint.
-  /// Triggers full Gemini Antigravity multi-agent orchestration.
-  Future<Map<String, dynamic>> voiceMatchBooking(int userId, String filePath) async {
+  // VOICE MATCH
+  Future<Map<String, dynamic>> voiceMatchBooking(
+      int userId, String filePath) async {
     try {
       final file = await MultipartFile.fromFile(
         filePath,
@@ -93,18 +112,18 @@ class ApiService {
       final response = await _dio.post(
         "/api/booking/voice-match",
         data: formData,
-        options: Options(
-          contentType: "multipart/form-data",
-        ),
+        options: Options(contentType: "multipart/form-data"),
       );
+
       return response.data;
     } on DioException catch (e) {
-      throw Exception("Voice match failed: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Voice match failed: ${e.response?.data ?? e.message}");
     }
   }
 
-  /// Transmits agricultural text command to trigger full Gemini Antigravity multi-agent orchestration.
-  Future<Map<String, dynamic>> textMatchBooking(int userId, String text) async {
+  // TEXT MATCH
+  Future<Map<String, dynamic>> textMatchBooking(
+      int userId, String text) async {
     try {
       final response = await _dio.post(
         "/api/booking/text-match",
@@ -113,42 +132,50 @@ class ApiService {
           "text": text,
         },
       );
+
       return response.data;
     } on DioException catch (e) {
-      throw Exception("Text match failed: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Text match failed: ${e.response?.data ?? e.message}");
     }
   }
 
-  /// Triggers standard matching for manual fallback coordinates.
-  Future<Map<String, dynamic>> createBooking(Map<String, dynamic> bookingData) async {
+  // CREATE BOOKING
+  Future<Map<String, dynamic>> createBooking(
+      Map<String, dynamic> bookingData) async {
     try {
-      final response = await _dio.post("/api/booking/create", data: bookingData);
+      final response = await _dio.post(
+        "/api/booking/create",
+        data: bookingData,
+      );
+
       return response.data;
     } on DioException catch (e) {
-      throw Exception("Booking failed: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Booking failed: ${e.response?.data ?? e.message}");
     }
   }
 
-  /// Invokes the ResolveAI Mediation Dispute Settle broker with the farmer's delay reason.
-  Future<Map<String, dynamic>> disputeBooking(int bookingId, String reason) async {
+  // DISPUTE
+  Future<Map<String, dynamic>> disputeBooking(
+      int bookingId, String reason) async {
     try {
       final response = await _dio.post(
         "/api/booking/$bookingId/dispute",
         data: {"reason": reason},
       );
+
       return response.data;
     } on DioException catch (e) {
-      throw Exception("Dispute negotiation failed: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Dispute failed: ${e.response?.data ?? e.message}");
     }
   }
 
-  /// Fetches platform stats for administrators.
+  // ADMIN METRICS
   Future<Map<String, dynamic>> fetchAdminMetrics() async {
     try {
       final response = await _dio.get("/api/admin/metrics");
       return response.data;
     } on DioException catch (e) {
-      throw Exception("Admin metrics fetch failed: ${e.response?.data['detail'] ?? e.message}");
+      throw Exception("Admin metrics failed: ${e.response?.data ?? e.message}");
     }
   }
 }
