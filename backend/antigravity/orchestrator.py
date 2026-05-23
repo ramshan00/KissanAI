@@ -10,6 +10,22 @@ from backend.database import get_connection
 # Load environment variables from .env
 load_dotenv()
 
+def safe_json_loads(text: str) -> Dict[str, Any]:
+    text = text.strip()
+    try:
+        return json.loads(text)
+    except Exception:
+        import re
+        match = re.search(r'\{.*\}', text, re.DOTALL)
+        if match:
+            try:
+                return json.loads(match.group(0))
+            except Exception:
+                pass
+        text = text.replace('```json', '').replace('```', '').strip()
+        return json.loads(text)
+
+
 class AntigravityOrchestrator:
     """Central orchestrator that coordinates AI agents and builds reasoning traces."""
 
@@ -60,7 +76,7 @@ class AntigravityOrchestrator:
             prompt_zabaan,
             generation_config={"response_mime_type": "application/json"}
         )
-        intent = json.loads(response_zabaan.text)
+        intent = safe_json_loads(response_zabaan.text)
         service_type = intent.get("service_type", "tractor")
         location = intent.get("location", "Lahore")
         urgency = intent.get("urgency", "normal")
@@ -90,7 +106,7 @@ class AntigravityOrchestrator:
             prompt_agri,
             generation_config={"response_mime_type": "application/json"}
         )
-        complexity_details = json.loads(response_agri.text)
+        complexity_details = safe_json_loads(response_agri.text)
         self.add_step(request_id, "AgriComplex: Complexity Classified", complexity_details)
 
         # ---- Step 3: Provider ranking (SmartMatch) ----
@@ -147,7 +163,7 @@ class AntigravityOrchestrator:
             prompt_smart,
             generation_config={"response_mime_type": "application/json"}
         )
-        smartmatch_details = json.loads(response_smart.text)
+        smartmatch_details = safe_json_loads(response_smart.text)
         
         selected_provider_id = smartmatch_details.get("selected_provider_id")
         selected_provider_name = smartmatch_details.get("selected_provider_name")
@@ -181,7 +197,7 @@ class AntigravityOrchestrator:
             prompt_price,
             generation_config={"response_mime_type": "application/json"}
         )
-        price_info = json.loads(response_price.text)
+        price_info = safe_json_loads(response_price.text)
         total_price = price_info.get("total_price", 3500.0)
         self.add_step(request_id, "FairPrice AI: Pricing Calculated", price_info)
 
@@ -206,7 +222,7 @@ class AntigravityOrchestrator:
             prompt_schedule,
             generation_config={"response_mime_type": "application/json"}
         )
-        slot = json.loads(response_schedule.text)
+        slot = safe_json_loads(response_schedule.text)
         scheduled_time = slot.get("scheduled_time", scheduled_time)
         self.add_step(request_id, "ScheduleMind: Slot Confirmed", slot)
 
@@ -236,7 +252,7 @@ class AntigravityOrchestrator:
             prompt_notify,
             generation_config={"response_mime_type": "application/json"}
         )
-        notification_details = json.loads(response_notify.text)
+        notification_details = safe_json_loads(response_notify.text)
         self.add_step(request_id, "NotifyHub: Notification Dispatched", notification_details)
 
         # Save to database
@@ -302,7 +318,7 @@ class AntigravityOrchestrator:
             prompt,
             generation_config={"response_mime_type": "application/json"}
         )
-        res_json = json.loads(response.text)
+        res_json = safe_json_loads(response.text)
 
         self.add_step(request_id, "ResolveAI: Dispute Received", res_json.get("dispute_received", {}))
         self.add_step(request_id, "ResolveAI: Context Analyzed", res_json.get("context_analyzed", {}))
